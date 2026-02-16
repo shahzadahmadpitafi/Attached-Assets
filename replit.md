@@ -32,5 +32,17 @@ Professional real estate website for Qanzak Global Properties, a property sales,
 - `properties` - id, title, description, price, type, status, location, city, area, bedrooms, bathrooms, image, featured, amenities
 - `inquiries` - id, name, email, phone, service, message, createdAt
 
+## Admin Dashboard
+- URL: `/admin` (login at `/admin/login`)
+- Default credentials: admin@qanzakglobal.com / Admin@123
+- Session-based auth with connect-pg-simple session store
+- Dashboard with 6 metric cards (total/sale/rent properties, inquiries, featured, cities)
+- Property CRUD: list with search, add/edit form with validation, delete with confirmation
+- Inquiry management: list with status filters, status updates (new/contacted/resolved), notes, delete
+- Sidebar navigation: Dashboard, Properties, Add Property, Inquiries
+- Protected routes redirect to /admin/login when not authenticated
+- Admin API endpoints all under /api/admin/* with session middleware
+
 ## Recent Changes
+- 2026-02-16: Added admin dashboard with login, property CRUD, inquiry management, and dashboard metrics
 - 2026-02-16: Initial build with 10 seeded properties, 5 pages, full API
