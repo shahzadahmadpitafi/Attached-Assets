@@ -9,7 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import PropertyCard from "@/components/property-card";
 import PropertyDetailDialog from "@/components/property-detail-dialog";
-import { COMPANY, SERVICES, TESTIMONIALS } from "@/lib/constants";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { COMPANY, SERVICES, TESTIMONIALS, TEAM } from "@/lib/constants";
 import {
   Search, ArrowRight, Home, Key, Wrench, Building2,
   MessageSquare, TrendingUp, Star, ChevronLeft, ChevronRight,
@@ -256,6 +257,43 @@ export default function HomePage() {
                 </div>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Meet Our Team */}
+      <section className="py-20 bg-muted/30" data-testid="section-team">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <p className="text-sm font-semibold text-[hsl(45,93%,47%)] uppercase tracking-wider">Our People</p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold mt-1">Meet Our Expert Team</h2>
+            <p className="text-muted-foreground mt-2 max-w-lg mx-auto">
+              Dedicated professionals committed to making your property dreams a reality.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {TEAM.map((m) => (
+              <Card key={m.name} className="p-6 text-center hover-elevate overflow-visible" data-testid={`card-team-home-${m.name.toLowerCase().replace(/\s/g, "-")}`}>
+                <Avatar className="w-20 h-20 mx-auto mb-4">
+                  <AvatarImage src={m.photo} alt={m.name} />
+                  <AvatarFallback className="bg-primary/10 text-primary text-xl font-semibold">
+                    {m.name.split(" ").map((n) => n[0]).join("")}
+                  </AvatarFallback>
+                </Avatar>
+                <h3 className="font-semibold">{m.name}</h3>
+                <p className="text-sm text-[hsl(45,93%,47%)] font-medium">{m.role}</p>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{m.shortBio}</p>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/about">
+              <Button variant="outline" className="gap-2" data-testid="button-view-team">
+                Learn More About Us <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

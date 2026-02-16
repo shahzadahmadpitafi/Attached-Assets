@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { COMPANY, SERVICES } from "@/lib/constants";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { COMPANY, SERVICES, TEAM } from "@/lib/constants";
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
@@ -162,7 +163,7 @@ export default function ContactPage() {
                         <FormItem>
                           <FormLabel>Phone (Optional)</FormLabel>
                           <FormControl>
-                            <Input placeholder="+92 xxx xxxxxxx" {...field} data-testid="input-phone" />
+                            <Input placeholder="+92 xxx xxxxxxx" {...field} value={field.value || ""} data-testid="input-phone" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -174,7 +175,7 @@ export default function ContactPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Service Interested In</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value || ""}>
                             <FormControl>
                               <SelectTrigger data-testid="select-service">
                                 <SelectValue placeholder="Select a service" />
@@ -228,6 +229,53 @@ export default function ContactPage() {
                 </form>
               </Form>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Contact Cards */}
+      <section className="py-16 bg-muted/30" data-testid="section-contact-team">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10">
+            <h2 className="font-serif text-2xl font-bold">Get in Touch With Our Team</h2>
+            <p className="text-muted-foreground mt-2">Reach the right person for your specific needs.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {TEAM.filter((_, i) => i > 0).map((m) => (
+              <Card key={m.name} className="p-5" data-testid={`card-contact-team-${m.name.toLowerCase().replace(/\s/g, "-")}`}>
+                <div className="flex items-center gap-4 mb-3">
+                  <Avatar className="w-14 h-14 flex-shrink-0">
+                    <AvatarImage src={m.photo} alt={m.name} />
+                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                      {m.name.split(" ").map((n) => n[0]).join("")}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="font-semibold">{m.name}</h3>
+                    <p className="text-sm text-[hsl(45,93%,47%)] font-medium">{m.role}</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">{m.shortBio}</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <a href={`tel:${m.phone}`}>
+                    <Button variant="outline" size="sm" className="gap-1.5">
+                      <Phone className="w-3.5 h-3.5" /> Call
+                    </Button>
+                  </a>
+                  <a href={`https://wa.me/${m.whatsapp}`} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" className="gap-1.5 bg-[#25D366] text-white">
+                      <SiWhatsapp className="w-3.5 h-3.5" /> WhatsApp
+                    </Button>
+                  </a>
+                  <a href={`mailto:${m.email}`}>
+                    <Button variant="outline" size="sm" className="gap-1.5">
+                      <Mail className="w-3.5 h-3.5" /> Email
+                    </Button>
+                  </a>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
