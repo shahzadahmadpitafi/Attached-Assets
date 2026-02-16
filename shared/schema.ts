@@ -18,6 +18,7 @@ export const properties = pgTable("properties", {
   image: text("image").notNull(),
   featured: boolean("featured").default(false),
   amenities: text("amenities").array(),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const inquiries = pgTable("inquiries", {
@@ -27,13 +28,42 @@ export const inquiries = pgTable("inquiries", {
   phone: text("phone"),
   service: text("service"),
   message: text("message").notNull(),
+  status: text("status").default("new"),
+  notes: text("notes"),
+  propertyId: varchar("property_id"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertPropertySchema = createInsertSchema(properties).omit({ id: true });
-export const insertInquirySchema = createInsertSchema(inquiries).omit({ id: true, createdAt: true });
+export const adminUsers = pgTable("admin_users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  name: text("name").notNull(),
+  role: text("role").notNull().default("admin"),
+  createdAt: timestamp("created_at").defaultNow(),
+  lastLogin: timestamp("last_login"),
+});
+
+export const insertPropertySchema = createInsertSchema(properties).omit({ id: true, createdAt: true });
+export const insertInquirySchema = createInsertSchema(inquiries).omit({ id: true, createdAt: true, status: true, notes: true, propertyId: true });
+export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({ id: true, createdAt: true, lastLogin: true, passwordHash: true }).extend({
+  password: z.string().min(6),
+});
+export const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+});
+
+export const updatePropertySchema = insertPropertySchema.partial();
+export const updateInquirySchema = z.object({
+  status: z.enum(["new", "in_progress", "responded", "closed"]).optional(),
+  notes: z.string().optional(),
+});
 
 export type InsertProperty = z.infer<typeof insertPropertySchema>;
 export type Property = typeof properties.$inferSelect;
 export type InsertInquiry = z.infer<typeof insertInquirySchema>;
 export type Inquiry = typeof inquiries.$inferSelect;
+export type AdminUser = typeof adminUsers.$inferSelect;
+export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
+export type LoginInput = z.infer<typeof loginSchema>;

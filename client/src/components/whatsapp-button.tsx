@@ -1,7 +1,12 @@
 import { COMPANY } from "@/lib/constants";
 import { SiWhatsapp } from "react-icons/si";
+import { useLocation } from "wouter";
 
 export default function WhatsAppButton() {
+  const [location] = useLocation();
+
+  if (location.startsWith("/admin")) return null;
+
   const url = `https://wa.me/${COMPANY.whatsapp}?text=${encodeURIComponent(COMPANY.whatsappMessage)}`;
 
   return (

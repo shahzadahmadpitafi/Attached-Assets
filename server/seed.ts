@@ -1,6 +1,7 @@
 import { db } from "./db";
-import { properties } from "@shared/schema";
+import { properties, adminUsers } from "@shared/schema";
 import { sql } from "drizzle-orm";
+import bcrypt from "bcryptjs";
 
 const seedProperties = [
   {
@@ -157,14 +158,24 @@ const seedProperties = [
 
 export async function seedDatabase() {
   const existing = await db.select({ id: properties.id }).from(properties).limit(1);
-  if (existing.length > 0) {
-    console.log("Database already seeded, skipping...");
-    return;
+  if (existing.length === 0) {
+    console.log("Seeding database with properties...");
+    for (const prop of seedProperties) {
+      await db.insert(properties).values(prop);
+    }
+    console.log(`Seeded ${seedProperties.length} properties.`);
   }
 
-  console.log("Seeding database with properties...");
-  for (const prop of seedProperties) {
-    await db.insert(properties).values(prop);
+  const existingAdmin = await db.select({ id: adminUsers.id }).from(adminUsers).limit(1);
+  if (existingAdmin.length === 0) {
+    console.log("Creating default admin user...");
+    const hash = await bcrypt.hash("Admin@123", 12);
+    await db.insert(adminUsers).values({
+      email: "admin@qanzakglobal.com",
+      passwordHash: hash,
+      name: "Admin",
+      role: "super_admin",
+    });
+    console.log("Default admin created: admin@qanzakglobal.com / Admin@123");
   }
-  console.log(`Seeded ${seedProperties.length} properties.`);
 }
