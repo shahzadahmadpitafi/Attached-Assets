@@ -1,0 +1,739 @@
+# Replit Prompt: Qanzak Global Properties - Admin Dashboard
+
+Create a comprehensive admin dashboard for Qanzak Global Properties that allows the business owner to manage all website content, properties, inquiries, and settings. This should integrate with the existing frontend website.
+
+## Business Information
+- **Business Name:** Qanzak Global Properties
+- **Phone:** +92 331 1479800
+- **Email:** info@qanzakglobal.com
+- **Location:** House 66, F-11/1, Islamabad, Pakistan
+
+## Technical Stack Requirements
+- **Backend:** Node.js with Express.js OR Next.js API routes
+- **Database:** MongoDB (MongoDB Atlas) OR Firebase OR Supabase
+- **Authentication:** JWT tokens with secure login system
+- **Frontend Admin Panel:** React with modern UI library (Tailwind CSS + shadcn/ui OR Material-UI)
+- **File Upload:** Cloudinary OR Firebase Storage OR AWS S3 for property images
+- **API Integration:** RESTful API connecting frontend website to backend
+
+## Core Features Required
+
+### 1. AUTHENTICATION SYSTEM
+
+#### Login Page
+- Clean, professional login form
+- Email/username and password fields
+- "Remember me" checkbox
+- Forgot password functionality
+- Session management (auto-logout after inactivity)
+- Secure password hashing (bcrypt)
+- Protected routes (redirect to login if not authenticated)
+
+#### User Management
+- Initial admin account creation
+- Add/edit/delete admin users
+- Role-based access control:
+  - **Super Admin:** Full access to everything
+  - **Admin:** Can manage properties and inquiries
+  - **Editor:** Can only edit existing properties
+- User activity logs
+
+### 2. DASHBOARD HOME PAGE
+
+#### Key Metrics Display
+- Total Properties Listed
+- Properties Sold (this month/year)
+- Properties for Rent
+- Total Inquiries (pending/responded)
+- New Inquiries Today
+- Website Visitors (if analytics integrated)
+- Revenue Statistics
+- Quick Action Buttons
+
+#### Recent Activity Feed
+- Latest property listings
+- Recent inquiries
+- Recent user actions
+- System notifications
+
+#### Quick Actions Section
+- Add New Property button
+- View Pending Inquiries button
+- Upload Bulk Properties button
+- Generate Reports button
+
+### 3. PROPERTY MANAGEMENT SYSTEM
+
+#### Properties List View
+- Searchable/filterable table showing all properties
+- Columns: Thumbnail, Title, Type, Location, Price, Status, Date Added, Actions
+- Filters:
+  - Property Type (House, Apartment, Commercial, Plot)
+  - Status (Available, Sold, Rented, Under Offer)
+  - Location (City, Area)
+  - Price Range
+  - Date Range
+- Bulk actions: Delete, Change Status, Export
+- Pagination (25/50/100 per page)
+- Sort by: Date, Price, Views, etc.
+
+#### Add New Property Form
+**Basic Information:**
+- Property Title (required)
+- Property Type (dropdown: House, Apartment, Villa, Commercial, Plot, Farm House)
+- Listing Type (dropdown: For Sale, For Rent, Both)
+- Status (dropdown: Available, Sold, Rented, Under Construction, Coming Soon)
+- Featured Property (checkbox)
+
+**Location Details:**
+- City (dropdown: Islamabad, Lahore)
+- Area/Sector (e.g., F-11/1, DHA, Bahria Town)
+- Complete Address
+- Google Maps Link or Coordinates
+- Nearby Landmarks (textarea)
+
+**Property Details:**
+- Price (PKR)
+- Price in USD (auto-convert OR manual entry)
+- Negotiable (checkbox)
+- Area/Size (with unit: Marla, Kanal, Sq Ft, Sq Yards)
+- Bedrooms (number)
+- Bathrooms (number)
+- Parking Spaces (number)
+- Floor Number (for apartments)
+- Total Floors
+- Year Built
+- Furnished Status (dropdown: Furnished, Semi-Furnished, Unfurnished)
+
+**Features & Amenities (Checkboxes):**
+- Electricity Backup
+- Gas Connection
+- Water Supply
+- Security System
+- CCTV Cameras
+- Boundary Wall
+- Lawn/Garden
+- Servant Quarter
+- Store Room
+- Study Room
+- Drawing Room
+- Dining Room
+- Kitchen (Modular/Simple)
+- Balcony
+- Elevator/Lift
+- Gym
+- Swimming Pool
+- Community Center
+- Mosque
+- School Nearby
+- Hospital Nearby
+- Shopping Mall Nearby
+- Public Transport Access
+- Internet/Wi-Fi
+- Intercom System
+
+**Description:**
+- Rich text editor for detailed property description
+- Key highlights (bullet points)
+- Property history (optional)
+
+**Images & Media:**
+- Multiple image upload (drag & drop)
+- Set featured image
+- Image reordering
+- Image captions
+- Maximum 20 images per property
+- Video URL (YouTube/Vimeo embed)
+- Virtual Tour Link (optional)
+- Floor Plans upload
+
+**SEO & Marketing:**
+- Meta Title
+- Meta Description
+- Keywords/Tags
+- Featured on Homepage (checkbox)
+- Hot Deal (checkbox)
+- Show on Social Media (checkbox)
+
+**Contact & Visibility:**
+- Agent Assigned (dropdown)
+- Show Agent Contact (checkbox)
+- Property Visibility (Public, Private, Draft)
+- Publish Date (schedule listing)
+
+**Save Options:**
+- Save as Draft
+- Publish Now
+- Schedule Publish
+
+#### Edit Property
+- All the same fields as Add Property
+- Property View Count
+- Total Inquiries Received
+- Last Modified Date
+- Property History Log
+
+#### Property Details View
+- Complete property information display
+- Quick edit button
+- Delete button (with confirmation)
+- Mark as Sold/Rented button
+- Share property link
+- Preview as it appears on website
+- Inquiry history for this property
+- Print property details
+
+### 4. INQUIRIES MANAGEMENT
+
+#### Inquiries Dashboard
+- All inquiries in a table format
+- Columns: Date, Name, Email, Phone, Property Interest, Status, Actions
+- Filter by:
+  - Status (New, In Progress, Responded, Closed)
+  - Date Range
+  - Property Type
+  - Source (Contact Form, WhatsApp, Phone, Email)
+- Search by name, email, or phone
+
+#### Inquiry Details View
+- Full inquiry information
+- Customer details (name, email, phone)
+- Property they're interested in (with link)
+- Message/Requirements
+- Source of inquiry
+- Date & Time
+- Status dropdown (New, In Progress, Responded, Closed)
+- Internal Notes section (for admin use only)
+- Response History
+- Action Buttons:
+  - Send Email Reply
+  - Send WhatsApp Message (link)
+  - Call Customer (click to call)
+  - Mark as Responded
+  - Archive
+  - Add to CRM
+
+#### Quick Response Templates
+- Pre-written email templates for common responses
+- Customizable templates
+- Merge fields (customer name, property details, etc.)
+
+### 5. MEDIA LIBRARY
+
+#### Image Management
+- All uploaded images in grid view
+- Upload new images
+- Bulk upload
+- Image details (size, dimensions, upload date)
+- Used in (which properties)
+- Delete unused images
+- Image compression on upload
+- Search images by name/tags
+
+### 6. TEAM MANAGEMENT
+
+#### Agents/Team Members
+- Add/Edit/Delete team members
+- Fields:
+  - Name
+  - Position/Role
+  - Photo
+  - Email
+  - Phone
+  - WhatsApp Number
+  - Bio/Description
+  - Specialization (Sales, Rentals, Commercial)
+  - Featured Agent (checkbox)
+  - Social Media Links
+- Assign properties to agents
+- Performance stats per agent
+
+### 7. WEBSITE CONTENT MANAGEMENT
+
+#### Homepage Management
+- Edit Hero Section:
+  - Headline text
+  - Subheadline
+  - Background image/video
+  - Call-to-action button text & link
+- Featured Properties selection
+- Statistics numbers (properties sold, happy clients, etc.)
+- Testimonials management
+- Company highlights/achievements
+
+#### About Us Page Editor
+- Rich text editor for company story
+- Mission & Vision statements
+- Team section management
+- Awards & certifications
+- Upload images
+
+#### Services Page Management
+- Add/Edit/Delete services
+- Service icon upload
+- Service description
+- Service features list
+- Order/Priority setting
+
+#### Blog Management (Optional)
+- Create/Edit/Delete blog posts
+- Rich text editor
+- Featured image
+- Categories & tags
+- SEO settings
+- Publish/Draft status
+- Schedule posts
+
+### 8. SETTINGS & CONFIGURATION
+
+#### General Settings
+- Business Name
+- Logo upload (Light & Dark versions)
+- Favicon
+- Contact Information (phone, email, address)
+- Business Hours
+- Social Media Links (Facebook, Instagram, LinkedIn, WhatsApp)
+- Google Analytics ID
+- Facebook Pixel ID
+
+#### Email Settings
+- SMTP configuration for contact form
+- Email templates customization
+- Auto-response settings
+- Notification emails (who receives inquiries)
+
+#### SEO Settings
+- Default Meta Title
+- Default Meta Description
+- Default Keywords
+- Google Search Console integration
+- XML Sitemap generation
+
+#### Security Settings
+- Change password
+- Two-factor authentication (optional)
+- Login activity log
+- IP whitelist (optional)
+- Session timeout duration
+
+#### Backup & Export
+- Backup database button
+- Export properties as CSV/Excel
+- Import properties from CSV
+- Restore from backup
+
+### 9. ANALYTICS & REPORTS
+
+#### Property Analytics
+- Most viewed properties
+- Properties by type (pie chart)
+- Properties by location (bar chart)
+- Properties by price range
+- Average time to sell/rent
+- Conversion rate
+
+#### Inquiry Analytics
+- Inquiries over time (line chart)
+- Inquiries by source
+- Response time statistics
+- Conversion rate (inquiry to sale/rental)
+
+#### Revenue Reports
+- Total sales this month/year
+- Rental income tracking
+- Commission calculations
+- Revenue by property type
+- Revenue trends (charts)
+
+#### Export Reports
+- PDF export
+- Excel export
+- Date range selection
+- Custom report builder
+
+### 10. NOTIFICATIONS SYSTEM
+
+#### In-App Notifications
+- Real-time notifications for:
+  - New inquiry received
+  - Property views milestone (100, 500, 1000 views)
+  - Property status changes
+  - New user registrations (if public user accounts)
+  - System updates
+- Notification center with mark as read
+- Notification preferences
+
+#### Email Notifications
+- Configurable email alerts for admins
+- Daily/Weekly summary emails
+- Urgent inquiry alerts
+
+### 11. DATABASE SCHEMA
+
+#### Users Collection/Table
+```
+{
+  _id: ObjectId,
+  name: String,
+  email: String (unique),
+  password: String (hashed),
+  role: String (super_admin, admin, editor),
+  phone: String,
+  createdAt: Date,
+  lastLogin: Date,
+  isActive: Boolean
+}
+```
+
+#### Properties Collection/Table
+```
+{
+  _id: ObjectId,
+  title: String,
+  propertyType: String,
+  listingType: String,
+  status: String,
+  city: String,
+  area: String,
+  address: String,
+  location: {
+    lat: Number,
+    lng: Number
+  },
+  price: {
+    pkr: Number,
+    usd: Number,
+    negotiable: Boolean
+  },
+  details: {
+    size: Number,
+    sizeUnit: String,
+    bedrooms: Number,
+    bathrooms: Number,
+    parking: Number,
+    floors: Number,
+    yearBuilt: Number,
+    furnished: String
+  },
+  features: [String],
+  description: String,
+  images: [{
+    url: String,
+    isFeatured: Boolean,
+    caption: String
+  }],
+  video: String,
+  virtualTour: String,
+  floorPlans: [String],
+  seo: {
+    metaTitle: String,
+    metaDescription: String,
+    keywords: [String]
+  },
+  featured: Boolean,
+  hotDeal: Boolean,
+  views: Number,
+  agentId: ObjectId,
+  visibility: String,
+  publishDate: Date,
+  createdAt: Date,
+  updatedAt: Date,
+  createdBy: ObjectId
+}
+```
+
+#### Inquiries Collection/Table
+```
+{
+  _id: ObjectId,
+  name: String,
+  email: String,
+  phone: String,
+  propertyId: ObjectId,
+  message: String,
+  source: String (contact_form, whatsapp, phone),
+  status: String (new, in_progress, responded, closed),
+  internalNotes: String,
+  responseHistory: [{
+    date: Date,
+    message: String,
+    respondedBy: ObjectId
+  }],
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+#### TeamMembers Collection/Table
+```
+{
+  _id: ObjectId,
+  name: String,
+  position: String,
+  photo: String,
+  email: String,
+  phone: String,
+  whatsapp: String,
+  bio: String,
+  specialization: String,
+  featured: Boolean,
+  socialMedia: {
+    facebook: String,
+    linkedin: String,
+    instagram: String
+  },
+  createdAt: Date
+}
+```
+
+### 12. API ENDPOINTS NEEDED
+
+#### Authentication
+- POST /api/auth/login
+- POST /api/auth/logout
+- POST /api/auth/forgot-password
+- POST /api/auth/reset-password
+- GET /api/auth/verify-token
+
+#### Properties
+- GET /api/properties (list all with filters)
+- GET /api/properties/:id (get single property)
+- POST /api/properties (create new)
+- PUT /api/properties/:id (update)
+- DELETE /api/properties/:id (delete)
+- PATCH /api/properties/:id/status (update status)
+- GET /api/properties/featured (get featured properties)
+
+#### Inquiries
+- GET /api/inquiries (list all)
+- GET /api/inquiries/:id (get single)
+- POST /api/inquiries (create - from website form)
+- PUT /api/inquiries/:id (update)
+- DELETE /api/inquiries/:id (delete)
+- PATCH /api/inquiries/:id/status (update status)
+
+#### Media
+- POST /api/media/upload (upload images)
+- GET /api/media (list all)
+- DELETE /api/media/:id (delete)
+
+#### Team
+- GET /api/team (list all)
+- POST /api/team (create)
+- PUT /api/team/:id (update)
+- DELETE /api/team/:id (delete)
+
+#### Settings
+- GET /api/settings (get all settings)
+- PUT /api/settings (update settings)
+
+#### Analytics
+- GET /api/analytics/properties (property stats)
+- GET /api/analytics/inquiries (inquiry stats)
+- GET /api/analytics/revenue (revenue stats)
+
+### 13. UI/UX REQUIREMENTS
+
+#### Design Specifications
+- Clean, modern dashboard design
+- Sidebar navigation (collapsible on mobile)
+- Top header with user profile dropdown
+- Breadcrumb navigation
+- Consistent color scheme matching the main website
+- Loading states for all actions
+- Success/Error toast notifications
+- Confirmation dialogs for destructive actions
+- Mobile responsive (works on tablets)
+- Dark mode support (optional)
+
+#### Navigation Structure
+```
+Dashboard Home
+├── Properties
+│   ├── All Properties
+│   ├── Add New
+│   └── Categories
+├── Inquiries
+│   ├── All Inquiries
+│   └── Response Templates
+├── Media Library
+├── Team Members
+├── Content
+│   ├── Homepage
+│   ├── About Us
+│   ├── Services
+│   └── Blog (optional)
+├── Analytics & Reports
+├── Settings
+│   ├── General
+│   ├── Email
+│   ├── SEO
+│   └── Security
+└── User Profile
+```
+
+#### Tables & Data Display
+- Use modern data tables with:
+  - Column sorting
+  - Search functionality
+  - Filters
+  - Pagination
+  - Row selection
+  - Export options
+  - Responsive on mobile (cards view)
+
+#### Forms
+- Clear labels and placeholders
+- Field validation with error messages
+- Required field indicators
+- Auto-save functionality (optional)
+- Rich text editors where needed
+- Date pickers
+- Drag & drop file uploads
+- Progress indicators for multi-step forms
+
+### 14. SECURITY CONSIDERATIONS
+
+- Secure password policies (minimum 8 characters, special characters)
+- JWT tokens with expiration
+- HTTPS only (enforce in production)
+- CSRF protection
+- XSS protection
+- SQL/NoSQL injection prevention
+- Rate limiting on API endpoints
+- Input sanitization
+- File upload security (validate file types, sizes)
+- Regular security audits logging
+
+### 15. PERFORMANCE OPTIMIZATION
+
+- Lazy loading for images
+- Pagination for large datasets
+- Database indexing on frequently queried fields
+- Caching for static content
+- Optimized image storage (compression, WebP format)
+- Minified CSS/JS in production
+- CDN for static assets
+
+### 16. DEPLOYMENT & HOSTING
+
+- Environment variables for sensitive data
+- Separate staging and production environments
+- Database backup automation
+- Error logging and monitoring
+- SSL certificate setup
+- Domain configuration
+- Deployment instructions for:
+  - Vercel/Netlify (frontend)
+  - Railway/Render/Heroku (backend if separate)
+  - MongoDB Atlas (database)
+  - Cloudinary (image storage)
+
+### 17. DOCUMENTATION
+
+Include README with:
+- Installation instructions
+- Environment variables setup
+- Database setup and seeding
+- API documentation
+- Admin user creation guide
+- Troubleshooting common issues
+- Deployment guide
+
+### 18. TESTING CHECKLIST
+
+- All CRUD operations work correctly
+- Authentication flow (login, logout, session management)
+- File uploads work and images display correctly
+- Forms validate properly
+- Inquiries are received and stored
+- API endpoints return correct data
+- Frontend website fetches data from API correctly
+- Mobile responsive design works
+- Performance is acceptable (page load under 3 seconds)
+- No console errors
+- Security measures in place
+
+## INTEGRATION WITH EXISTING WEBSITE
+
+### Frontend Website Updates Needed
+1. Connect to API endpoints instead of using static data
+2. Fetch properties dynamically from database
+3. Submit contact form to API
+4. Display team members from database
+5. Fetch featured properties for homepage
+6. Apply filters from API
+7. Real-time property availability status
+
+### API Connection Example
+```javascript
+// Frontend website property fetch
+const fetchProperties = async (filters) => {
+  const response = await fetch('/api/properties', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const data = await response.json();
+  return data;
+}
+```
+
+## ADDITIONAL FEATURES (NICE TO HAVE)
+
+- Property comparison tool for customers (up to 3 properties)
+- WhatsApp Business API integration for automated responses
+- SMS notifications for urgent inquiries
+- Lead scoring system
+- Email marketing campaigns
+- Customer CRM (track customer interactions)
+- Property valuation calculator
+- Maintenance request tracking (for rented properties)
+- Rental payment tracking
+- Contract document management
+- Automated reminder system (follow-ups, renewals)
+- Multi-language support (English/Urdu)
+- Mobile app for admins (React Native - future phase)
+
+## PRIORITY IMPLEMENTATION ORDER
+
+**Phase 1 (Core Functionality):**
+1. Authentication system
+2. Property CRUD operations
+3. Image upload functionality
+4. Basic dashboard
+5. Inquiries management
+6. API integration with frontend
+
+**Phase 2 (Enhanced Features):**
+7. Team management
+8. Content management
+9. Analytics dashboard
+10. Settings panel
+
+**Phase 3 (Advanced Features):**
+11. Advanced reporting
+12. Email templates
+13. Bulk operations
+14. SEO tools
+
+## SAMPLE ADMIN CREDENTIALS (FOR DEVELOPMENT)
+
+```
+Email: admin@qanzakglobal.com
+Password: Admin@123
+```
+
+**Important:** Change these credentials immediately after first login in production!
+
+---
+
+**FINAL NOTES:**
+- This admin panel should be hosted on a subdomain like `admin.qanzakglobal.com`
+- Ensure it's NOT publicly accessible - authentication required
+- Create clear documentation for the business owner on how to use the admin panel
+- Include video tutorials or screenshots in the README
+- Make the interface intuitive enough for non-technical users
+- Test thoroughly before deploying to production
+- Set up automated backups daily
+
+Create this as a production-ready admin dashboard that integrates seamlessly with the existing Qanzak Global Properties website.
