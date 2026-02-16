@@ -41,7 +41,7 @@ export default function Navbar() {
           <img
             src="/images/logo.png"
             alt="Qanzak Global Properties"
-            className="h-10 sm:h-12 w-auto object-contain"
+            className="h-14 sm:h-16 w-auto object-contain"
             data-testid="img-logo"
           />
         </Link>
