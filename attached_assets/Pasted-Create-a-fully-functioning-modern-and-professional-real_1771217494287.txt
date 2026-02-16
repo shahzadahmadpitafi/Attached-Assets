@@ -1,0 +1,219 @@
+Create a fully functioning, modern, and professional real estate website for Qanzak Global Properties with the following specifications:
+Business Information
+
+Business Name: Qanzak Global Properties
+Location: House 66, F-11/1, Islamabad, Pakistan
+Phone: +92 331 1479800
+Email: info@qanzakglobal.com
+Services: Property Sales, Rentals, Maintenance, and Complete Real Estate Solutions in Islamabad and Lahore
+
+Technical Requirements
+
+Use modern React with Vite or Next.js
+Responsive design that works perfectly on mobile, tablet, and desktop
+Fast loading times with optimized images
+SEO-friendly structure
+Contact form with email functionality
+WhatsApp integration for instant contact
+Google Maps integration showing the office location
+
+Design Requirements
+
+Modern, professional, and luxurious design aesthetic
+Color scheme: Use elegant colors like deep blue, gold accents, white, and gray tones
+High-quality placeholder images for properties (use Unsplash API or similar)
+Smooth animations and transitions
+Professional typography (use Google Fonts like Playfair Display for headings and Inter for body text)
+Clean, minimalist layout with plenty of white space
+
+Website Structure & Pages
+1. Homepage
+
+Hero section with stunning background image/video of Islamabad properties
+Headline: "Your Trusted Real Estate Partner in Islamabad & Lahore"
+Quick property search bar (Buy/Rent/Sell options)
+Featured properties carousel (at least 6-8 property cards)
+Services overview section with icons
+Statistics counter (e.g., "500+ Properties Sold", "1000+ Happy Clients", "15+ Years Experience")
+Testimonials section
+Call-to-action sections
+Contact information footer
+
+2. Services Page
+Include detailed sections for:
+
+Property Sales (residential & commercial)
+Property Rentals (houses, apartments, commercial spaces)
+Property Maintenance (repair, renovation, upkeep)
+Property Management
+Real Estate Consultation
+Investment Opportunities
+
+Each service should have:
+
+Icon/image
+Description
+"Get Quote" button
+
+3. Properties Page (Listings)
+
+Filter/search functionality (location, price range, property type, bedrooms, etc.)
+Grid layout of property cards showing:
+
+Property image
+Title/name
+Location
+Price
+Key features (bedrooms, bathrooms, area)
+"View Details" button
+
+
+Property detail modal/page with:
+
+Image gallery
+Full description
+Amenities list
+Location map
+Contact agent button
+WhatsApp inquiry button
+
+
+
+4. About Us Page
+
+Company story and mission
+Why choose Qanzak Global Properties
+Team section (with placeholder profiles)
+Our values and commitment
+Awards and certifications section
+
+5. Contact Page
+
+Contact form with fields:
+
+Name
+Email
+Phone
+Service interested in (dropdown)
+Message
+Submit button
+
+
+Office location with embedded Google Map
+Contact information card (address, phone, email, business hours)
+Social media links
+WhatsApp floating button
+
+Key Features to Implement
+1. Contact Form Functionality
+
+Use EmailJS or similar service for form submission
+Form validation
+Success/error messages
+Auto-response to user email
+
+2. WhatsApp Integration
+
+Floating WhatsApp button on all pages
+Pre-filled message: "Hi, I'm interested in learning more about your real estate services"
+Link: https://wa.me/923311479800
+
+3. Interactive Elements
+
+Smooth scroll navigation
+Hover effects on property cards
+Image galleries with lightbox
+Mobile-friendly hamburger menu
+Sticky navigation bar
+Back-to-top button
+Loading animations
+
+4. Property Showcase
+Create at least 8-10 sample property listings with:
+
+Realistic property details
+Mix of houses, apartments, and commercial properties
+Locations in Islamabad (F-11, F-10, F-7, DHA, Bahria Town) and Lahore
+Price ranges from affordable to luxury
+High-quality placeholder images
+
+5. Performance Optimization
+
+Lazy loading for images
+Optimized bundle size
+Fast page transitions
+Cached API calls if any
+
+6. SEO Elements
+
+Meta tags for all pages
+Open Graph tags for social sharing
+Proper heading hierarchy (H1, H2, H3)
+Alt text for all images
+Sitemap generation
+
+Additional Features
+
+Property comparison tool
+Mortgage calculator
+Area guides for Islamabad and Lahore neighborhoods
+Blog section for real estate tips and market updates
+Newsletter signup
+Multi-language support option (English/Urdu)
+Dark mode toggle
+Currency converter (PKR to USD/EUR)
+
+Color Palette Suggestion
+
+Primary: #1e40af (Deep Blue)
+Secondary: #d4af37 (Gold)
+Accent: #059669 (Emerald Green)
+Background: #ffffff (White)
+Text: #1f2937 (Dark Gray)
+Light Background: #f9fafb (Off White)
+
+Icons & Assets
+
+Use Lucide React or Heroicons for icons
+Property icons: Home, Building, Key, MapPin, Phone, Mail, etc.
+Social media icons: Facebook, Instagram, LinkedIn, WhatsApp
+
+Footer
+Include:
+
+Company logo and tagline
+Quick links (Home, Services, Properties, About, Contact)
+Contact information
+Social media links
+Business hours
+Copyright notice: "© 2024 Qanzak Global Properties. All rights reserved."
+Privacy Policy and Terms of Service links
+
+Mobile Responsiveness
+Ensure perfect functionality on:
+
+Mobile phones (320px - 480px)
+Tablets (481px - 768px)
+Laptops (769px - 1024px)
+Desktops (1025px+)
+
+Testing Checklist
+
+All links working properly
+Contact form submits successfully
+WhatsApp button opens correctly with pre-filled message
+Maps load properly
+Images display correctly on all devices
+Navigation works on mobile
+Fast loading times
+No console errors
+
+Deployment
+
+Make it ready for deployment on Vercel, Netlify, or similar platforms
+Include environment variables setup for API keys
+Provide clear README with setup instructions
+
+
+Important: Make the website look professional and trustworthy, as it represents a real estate business. Use modern design trends, ensure smooth user experience, and make it easy for potential clients to contact the business through multiple channels (phone, email, WhatsApp, contact form).
+Create this as a complete, production-ready website that can go live immediately after minor customizations.
