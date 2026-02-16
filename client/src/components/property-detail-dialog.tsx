@@ -5,6 +5,7 @@ import { MapPin, Bed, Bath, Maximize, Phone, Check } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { COMPANY } from "@/lib/constants";
 import type { Property } from "@shared/schema";
+import PropertyGallery from "./property-gallery";
 
 interface PropertyDetailDialogProps {
   property: Property | null;
@@ -27,12 +28,10 @@ export default function PropertyDetailDialog({ property, open, onOpenChange }: P
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0" data-testid="dialog-property-detail">
         <div className="relative">
-          <img
-            src={property.image}
-            alt={property.title}
-            className="w-full h-64 sm:h-72 object-cover rounded-t-md"
-          />
-          <div className="absolute top-4 left-4 flex gap-2">
+          <div className="p-4 pb-0">
+            <PropertyGallery propertyId={property.id} fallbackImage={property.image} />
+          </div>
+          <div className="absolute top-6 left-6 flex gap-2 z-10">
             <Badge className={`${property.status === "For Sale" ? "bg-primary text-primary-foreground" : "bg-[hsl(160,84%,39%)] text-white"}`}>
               {property.status}
             </Badge>
@@ -40,7 +39,7 @@ export default function PropertyDetailDialog({ property, open, onOpenChange }: P
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-6 pt-3">
           <DialogHeader className="text-left mb-0">
             <DialogTitle className="text-2xl font-serif" data-testid="text-detail-title">{property.title}</DialogTitle>
           </DialogHeader>

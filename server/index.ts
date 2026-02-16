@@ -3,9 +3,11 @@ import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
 import pg from "pg";
 import { registerRoutes } from "./routes";
+import { registerObjectStorageRoutes } from "./replit_integrations/object_storage";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 import { seedDatabase } from "./seed";
+import { storage } from "./storage";
 
 const app = express();
 const httpServer = createServer(app);
@@ -90,10 +92,15 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  registerObjectStorageRoutes(app);
   await registerRoutes(httpServer, app);
 
   await seedDatabase().catch((err) => {
     console.error("Seed error:", err);
+  });
+
+  await storage.backfillLegacyImages().catch((err) => {
+    console.error("Media backfill error:", err);
   });
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {

@@ -2,10 +2,11 @@ import {
   type Property, type InsertProperty,
   type Inquiry, type InsertInquiry,
   type AdminUser,
-  properties, inquiries, adminUsers,
+  type PropertyMedia, type InsertMedia,
+  properties, inquiries, adminUsers, propertyMedia,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, gte, lte, and, desc, count, sql } from "drizzle-orm";
+import { eq, gte, lte, and, desc, asc, count, sql } from "drizzle-orm";
 
 export interface IStorage {
   getProperties(filters?: {
@@ -37,6 +38,16 @@ export interface IStorage {
     newInquiries: number;
     respondedInquiries: number;
   }>;
+  getMediaByProperty(propertyId: string, type?: string): Promise<PropertyMedia[]>;
+  getMedia(id: string): Promise<PropertyMedia | undefined>;
+  createMedia(media: InsertMedia): Promise<PropertyMedia>;
+  updateMedia(id: string, data: Partial<InsertMedia>): Promise<PropertyMedia | undefined>;
+  deleteMedia(id: string): Promise<boolean>;
+  deleteMediaByProperty(propertyId: string): Promise<number>;
+  reorderMedia(propertyId: string, mediaIds: string[]): Promise<void>;
+  setFeaturedMedia(propertyId: string, mediaId: string): Promise<void>;
+  syncPropertyImage(propertyId: string): Promise<void>;
+  backfillLegacyImages(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -80,6 +91,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteProperty(id: string): Promise<boolean> {
+    await db.delete(propertyMedia).where(eq(propertyMedia.propertyId, id));
     const result = await db.delete(properties).where(eq(properties.id, id)).returning();
     return result.length > 0;
   }
@@ -134,6 +146,83 @@ export class DatabaseStorage implements IStorage {
       newInquiries: allInq.filter(i => i.status === "new" || !i.status).length,
       respondedInquiries: allInq.filter(i => i.status === "responded" || i.status === "closed").length,
     };
+  }
+
+  async getMediaByProperty(propertyId: string, type?: string): Promise<PropertyMedia[]> {
+    const conditions = [eq(propertyMedia.propertyId, propertyId)];
+    if (type) conditions.push(eq(propertyMedia.type, type));
+    return db.select().from(propertyMedia)
+      .where(and(...conditions))
+      .orderBy(asc(propertyMedia.sortOrder), asc(propertyMedia.createdAt));
+  }
+
+  async getMedia(id: string): Promise<PropertyMedia | undefined> {
+    const [media] = await db.select().from(propertyMedia).where(eq(propertyMedia.id, id));
+    return media;
+  }
+
+  async createMedia(media: InsertMedia): Promise<PropertyMedia> {
+    const [created] = await db.insert(propertyMedia).values(media).returning();
+    return created;
+  }
+
+  async updateMedia(id: string, data: Partial<InsertMedia>): Promise<PropertyMedia | undefined> {
+    const [updated] = await db.update(propertyMedia).set(data).where(eq(propertyMedia.id, id)).returning();
+    return updated;
+  }
+
+  async deleteMedia(id: string): Promise<boolean> {
+    const result = await db.delete(propertyMedia).where(eq(propertyMedia.id, id)).returning();
+    return result.length > 0;
+  }
+
+  async deleteMediaByProperty(propertyId: string): Promise<number> {
+    const result = await db.delete(propertyMedia).where(eq(propertyMedia.propertyId, propertyId)).returning();
+    return result.length;
+  }
+
+  async reorderMedia(propertyId: string, mediaIds: string[]): Promise<void> {
+    for (let i = 0; i < mediaIds.length; i++) {
+      await db.update(propertyMedia)
+        .set({ sortOrder: i })
+        .where(and(eq(propertyMedia.id, mediaIds[i]), eq(propertyMedia.propertyId, propertyId)));
+    }
+  }
+
+  async setFeaturedMedia(propertyId: string, mediaId: string): Promise<void> {
+    await db.update(propertyMedia)
+      .set({ isFeatured: false })
+      .where(eq(propertyMedia.propertyId, propertyId));
+    await db.update(propertyMedia)
+      .set({ isFeatured: true })
+      .where(and(eq(propertyMedia.id, mediaId), eq(propertyMedia.propertyId, propertyId)));
+    await this.syncPropertyImage(propertyId);
+  }
+
+  async syncPropertyImage(propertyId: string): Promise<void> {
+    const allMedia = await this.getMediaByProperty(propertyId, "image");
+    const featured = allMedia.find(m => m.isFeatured);
+    const imageUrl = featured?.url || allMedia[0]?.url;
+    if (imageUrl) {
+      await db.update(properties).set({ image: imageUrl }).where(eq(properties.id, propertyId));
+    }
+  }
+
+  async backfillLegacyImages(): Promise<void> {
+    const allProps = await db.select().from(properties);
+    for (const prop of allProps) {
+      const existing = await this.getMediaByProperty(prop.id, "image");
+      if (existing.length === 0 && prop.image) {
+        await db.insert(propertyMedia).values({
+          propertyId: prop.id,
+          type: "image",
+          url: prop.image,
+          caption: prop.title,
+          isFeatured: true,
+          sortOrder: 0,
+        });
+      }
+    }
   }
 }
 

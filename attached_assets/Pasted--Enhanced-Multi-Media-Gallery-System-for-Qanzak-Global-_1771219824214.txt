@@ -1,0 +1,706 @@
+# Enhanced Multi-Media Gallery System for Qanzak Global Properties
+
+## ADD THIS TO YOUR EXISTING ADMIN DASHBOARD PROMPT
+
+This enhancement adds professional image and video gallery management with advanced features for showcasing properties.
+
+---
+
+## ENHANCED IMAGE & VIDEO UPLOAD SYSTEM
+
+### 1. PROPERTY MEDIA MANAGEMENT
+
+#### Multi-Image Upload Interface
+- **Drag & Drop Zone:** Large, intuitive drag-and-drop area
+- **Bulk Upload:** Upload up to 50 images at once
+- **Progress Bar:** Show upload progress for each file
+- **Image Preview:** Thumbnail previews immediately after selection
+- **Supported Formats:** JPG, JPEG, PNG, WebP, HEIC
+- **Maximum File Size:** 10MB per image (auto-compress if larger)
+- **Automatic Optimization:** 
+  - Compress images to reduce file size
+  - Generate multiple sizes (thumbnail, medium, large, original)
+  - Convert to WebP format for better performance
+  - Maintain aspect ratio
+
+#### Image Management Features
+**For Each Uploaded Image:**
+- Drag-and-drop reordering (change display order)
+- Set as "Featured Image" (main property thumbnail)
+- Add caption/description for each image
+- Tag images by room/area:
+  - Exterior
+  - Living Room
+  - Bedroom 1, 2, 3, etc.
+  - Kitchen
+  - Bathroom
+  - Garden/Lawn
+  - Parking
+  - Street View
+  - Other
+- Delete individual images (with confirmation)
+- Replace image (upload new version)
+- Zoom preview on click
+- Image editing tools:
+  - Crop
+  - Rotate
+  - Brightness/Contrast adjustment
+  - Filters (optional)
+
+**Batch Operations:**
+- Select multiple images
+- Bulk delete
+- Bulk tag assignment
+- Bulk caption addition
+- Download all images as ZIP
+
+#### Image Gallery Display Options
+**Admin Side:**
+- Grid view (default) - thumbnails in grid
+- List view - detailed list with info
+- Slideshow preview - see how it looks to customers
+
+**Frontend Website Display:**
+- Main featured image (large)
+- Thumbnail gallery below (clickable)
+- Lightbox/Modal viewer with:
+  - Full-screen view
+  - Previous/Next navigation
+  - Zoom in/out capability
+  - Image counter (e.g., "5 / 24")
+  - Download image button (optional)
+  - Share image button
+- Image lazy loading for performance
+- Swipe gestures on mobile
+- Auto-play slideshow option
+
+### 2. VIDEO MANAGEMENT SYSTEM
+
+#### Video Upload Options
+
+**Option A: Direct Video Upload**
+- Upload video files directly
+- Supported formats: MP4, MOV, AVI, WebM
+- Maximum file size: 500MB per video
+- Maximum 5 videos per property
+- Automatic video compression and optimization
+- Generate video thumbnails automatically
+- Progress bar during upload
+
+**Option B: Video URL Embedding (Recommended)**
+- YouTube URL input field
+- Vimeo URL input field
+- Google Drive video link
+- Facebook video link
+- Instagram video link
+- Automatic embed code generation
+- Video preview in admin panel
+
+**Option C: Hybrid Approach**
+- Support both direct upload AND URL embedding
+- Let admin choose preferred method per video
+
+#### Video Management Features
+**For Each Video:**
+- Video title/name
+- Video description
+- Video type tag:
+  - Property Tour
+  - Drone/Aerial View
+  - Neighborhood Tour
+  - Agent Introduction
+  - Virtual Walkthrough
+  - Construction Progress (for under-construction properties)
+- Thumbnail image (auto-generated or custom upload)
+- Reorder videos (drag-and-drop)
+- Set as featured video (plays first)
+- Delete video
+- Make video autoplay on property page (checkbox)
+- Mute/Unmute by default setting
+
+**Video Display on Frontend:**
+- Responsive video player
+- Custom play button overlay
+- Video controls (play, pause, fullscreen, volume)
+- Multiple video tabs if more than one video
+- Video gallery view option
+- Clickable thumbnail grid showing all videos
+- Video plays in modal/lightbox
+- Mobile-optimized player
+
+### 3. VIRTUAL TOUR & 360° IMAGES
+
+#### 360° Image Upload
+- Upload 360-degree panoramic images
+- Support for equirectangular format
+- Interactive viewer on frontend:
+  - Click and drag to look around
+  - Zoom in/out
+  - Fullscreen mode
+  - Hotspot markers for room navigation
+  - VR headset compatible (optional)
+
+#### Virtual Tour Integration
+- Matterport tour embed URL
+- Zillow 3D Home embed
+- Custom virtual tour link
+- iFrame embed support
+- Virtual tour thumbnail
+- "Take Virtual Tour" prominent button on property page
+
+### 4. FLOOR PLAN UPLOAD
+
+#### Floor Plan Management
+- Upload multiple floor plans (ground floor, first floor, etc.)
+- Supported formats: PDF, JPG, PNG
+- Floor plan labeling:
+  - Ground Floor
+  - First Floor
+  - Second Floor
+  - Basement
+  - Roof Plan
+  - Site Plan
+- Interactive floor plan viewer
+- Zoom and pan functionality
+- Download floor plan button for visitors
+- Print-friendly version
+
+### 5. DOCUMENT UPLOADS (ADDITIONAL)
+
+#### Property Documents
+- Property deed/title documents
+- NOC (No Objection Certificate)
+- Approved building plans
+- Energy certificate
+- Property survey reports
+- Brochure/Marketing materials
+
+**Security:**
+- Password protect sensitive documents
+- Only visible to serious inquiries
+- Admin approval required to share
+- Watermark on PDFs (optional)
+
+### 6. STORAGE & CDN CONFIGURATION
+
+#### Recommended Storage Solutions
+
+**Option 1: Cloudinary (Recommended)**
+```javascript
+// Cloudinary Configuration
+{
+  cloud_name: "your-cloud-name",
+  api_key: "your-api-key",
+  api_secret: "your-api-secret",
+  folder: "qanzak-properties",
+  transformation: {
+    quality: "auto",
+    fetch_format: "auto"
+  }
+}
+
+// Features:
+- Free tier: 25GB storage, 25GB bandwidth
+- Automatic image optimization
+- On-the-fly transformations (resize, crop, effects)
+- Video hosting and transcoding
+- CDN delivery (fast loading worldwide)
+- AI-powered automatic tagging
+- Backup and versioning
+```
+
+**Option 2: AWS S3 + CloudFront**
+```javascript
+// AWS S3 Configuration
+{
+  bucket: "qanzak-properties",
+  region: "ap-south-1", // Mumbai region (closest to Pakistan)
+  accessKeyId: "your-access-key",
+  secretAccessKey: "your-secret-key",
+  
+  // CloudFront CDN for fast delivery
+  cloudfrontDomain: "your-cloudfront-url.cloudfront.net"
+}
+
+// Features:
+- Highly scalable and reliable
+- Pay-as-you-go pricing
+- Advanced security options
+- Global CDN with CloudFront
+- Lifecycle policies for cost optimization
+```
+
+**Option 3: Firebase Storage**
+```javascript
+// Firebase Configuration
+{
+  apiKey: "your-api-key",
+  authDomain: "qanzak-properties.firebaseapp.com",
+  projectId: "qanzak-properties",
+  storageBucket: "qanzak-properties.appspot.com"
+}
+
+// Features:
+- Free tier: 5GB storage, 1GB daily downloads
+- Easy integration with Firebase Auth
+- Real-time file upload status
+- Good for smaller projects
+- Google CDN
+```
+
+**Option 4: Vercel Blob Storage** (If using Next.js on Vercel)
+```javascript
+// Vercel Blob Configuration
+- Integrated with Vercel deployment
+- Fast CDN delivery
+- Simple API
+- Pay-as-you-go pricing
+```
+
+### 7. IMAGE GALLERY LAYOUTS FOR FRONTEND
+
+#### Layout Option 1: Grid Gallery
+```
+[Large Featured Image - Full Width]
+
+[Thumb] [Thumb] [Thumb] [Thumb] [Thumb] [Thumb]
+[Thumb] [Thumb] [Thumb] [+15 More]
+```
+
+#### Layout Option 2: Masonry Gallery
+```
+[Img1 - Large] [Img2] [Img3]
+[Img4]         [Img5] [Img6 - Large]
+[Img7] [Img8]  [Img9] [Img10]
+```
+
+#### Layout Option 3: Carousel with Thumbnails
+```
+< [Main Large Image Carousel] >
+
+[Thumb] [Thumb] [Thumb] [Thumb] [Thumb] [Thumb]
+```
+
+#### Layout Option 4: Split View
+```
+[Large Featured Image]  |  [Thumbnail Grid]
+                        |  [Thumb] [Thumb]
+                        |  [Thumb] [Thumb]
+                        |  [See All]
+```
+
+**Include all 4 layouts and let admin choose per property**
+
+### 8. LIGHTBOX/MODAL VIEWER
+
+When user clicks any image, open full-screen lightbox with:
+
+**Features:**
+- Full-screen black overlay
+- Large image centered
+- Navigation arrows (Previous/Next)
+- Image counter ("3 / 24")
+- Close button (X)
+- Thumbnail strip at bottom
+- Zoom controls (+ / -)
+- Download image button
+- Share image button
+- Image caption display
+- Keyboard navigation (arrow keys, ESC to close)
+- Touch/Swipe gestures on mobile
+- Auto-advance option (slideshow mode)
+- Smooth animations and transitions
+
+### 9. VIDEO PLAYER FEATURES
+
+#### Custom Video Player Controls
+- Play/Pause button
+- Progress bar with seek
+- Current time / Total duration
+- Volume control with slider
+- Mute/Unmute button
+- Playback speed (0.5x, 1x, 1.25x, 1.5x, 2x)
+- Fullscreen toggle
+- Picture-in-Picture mode
+- Subtitle/Caption support (optional)
+- Quality selection (if multiple qualities available)
+- Share video button
+- Download video (optional, admin control)
+
+#### Video Thumbnail Generator
+- Automatically generate 3-5 thumbnails from video
+- Admin can select which thumbnail to use
+- Or upload custom thumbnail image
+
+### 10. MEDIA ORGANIZATION IN ADMIN
+
+#### Admin Panel Media Library Structure
+
+**Sidebar Organization:**
+```
+Media Library
+├── All Media (count)
+├── Images (count)
+│   ├── Property Photos
+│   ├── Team Photos
+│   ├── Blog Images
+│   └── Other
+├── Videos (count)
+│   ├── Property Tours
+│   ├── Drone Footage
+│   └── Testimonials
+├── Documents (count)
+├── 360° Images (count)
+└── Floor Plans (count)
+```
+
+#### Media Library Features
+- Search media by filename, tags, property
+- Filter by:
+  - Media type (image, video, document)
+  - Date uploaded
+  - Size
+  - Property association
+  - Used/Unused
+- Sort by: Date, Size, Name, Type
+- Grid/List view toggle
+- Bulk select and operations
+- Storage usage display with pie chart
+- "Unused Media" section (media not linked to any property)
+- Bulk delete unused media
+
+### 11. IMAGE WATERMARKING
+
+#### Automatic Watermark Feature
+- Upload company logo as watermark
+- Watermark settings:
+  - Position (top-left, top-right, bottom-left, bottom-right, center)
+  - Opacity (0-100%)
+  - Size (small, medium, large)
+  - Apply to all images automatically (toggle)
+- Watermark text option:
+  - "Qanzak Global Properties"
+  - "© Qanzak Global Properties"
+  - Custom text
+- Font and color selection
+- Preview before applying
+- Apply to existing images (batch operation)
+
+### 12. SOCIAL MEDIA OPTIMIZATION
+
+#### Automatic Image Sizing for Social Media
+Generate optimized versions for:
+- Facebook: 1200 x 630px
+- Instagram: 1080 x 1080px (square), 1080 x 1350px (portrait)
+- Twitter: 1200 x 675px
+- WhatsApp: 800 x 800px
+- LinkedIn: 1200 x 627px
+
+#### One-Click Social Share
+- "Share Property" button in admin
+- Select which images to share
+- Auto-generate social media post text
+- Direct posting to:
+  - Facebook Page
+  - Instagram Business
+  - LinkedIn Company Page
+  - Twitter/X
+- Schedule posts for later
+
+### 13. IMAGE COMPRESSION & OPTIMIZATION
+
+#### Automatic Processing on Upload
+1. Resize images if larger than 4K resolution
+2. Compress to reduce file size (maintain quality)
+3. Convert to WebP format (with fallback to JPG for older browsers)
+4. Generate multiple sizes:
+   - Thumbnail: 150 x 150px
+   - Small: 400 x 300px
+   - Medium: 800 x 600px
+   - Large: 1200 x 900px
+   - Original: Maintain original size
+5. Strip unnecessary metadata (EXIF data except orientation)
+6. Apply image sharpening (subtle)
+
+#### Manual Optimization Tools
+- Batch compress existing images
+- Convert all images to WebP
+- Regenerate thumbnails
+- Find and delete duplicate images
+- Find and compress large images (over 2MB)
+
+### 14. MOBILE APP INTEGRATION (Future)
+
+#### Mobile Upload Features
+- Camera direct upload
+- Photo gallery selection
+- Multiple image selection
+- Video recording upload
+- Location tagging (auto-add property location)
+- Voice notes (transcribed to text for descriptions)
+- Quick edit tools (crop, rotate)
+- Offline queue (upload when back online)
+
+### 15. ANALYTICS FOR MEDIA
+
+#### Track Media Performance
+- Most viewed images (by property)
+- Most viewed videos
+- Average time spent on video
+- Click-through rate on gallery
+- Image load times
+- Popular image categories
+- User engagement with 360° tours
+
+### 16. ACCESSIBILITY FEATURES
+
+#### Image Alt Text
+- Mandatory alt text for all images
+- Auto-suggest alt text using AI (optional)
+- Screen reader friendly
+
+#### Video Captions
+- Upload subtitle files (.srt, .vtt)
+- Auto-generate captions using speech-to-text
+- Multiple language support
+
+### 17. SAMPLE DATABASE SCHEMA UPDATE
+
+```javascript
+// Properties Collection - Media Fields
+{
+  // ... other property fields ...
+  
+  media: {
+    images: [
+      {
+        id: String,
+        url: String,
+        thumbnail: String,
+        mediumSize: String,
+        largeSize: String,
+        originalSize: String,
+        caption: String,
+        altText: String,
+        tags: [String], // ["exterior", "front_view"]
+        roomType: String, // "living_room", "bedroom", etc.
+        isFeatured: Boolean,
+        order: Number,
+        uploadedAt: Date,
+        fileSize: Number, // in bytes
+        dimensions: {
+          width: Number,
+          height: Number
+        }
+      }
+    ],
+    
+    videos: [
+      {
+        id: String,
+        type: String, // "upload" or "embed"
+        url: String, // video file URL or embed URL
+        embedCode: String,
+        thumbnail: String,
+        title: String,
+        description: String,
+        videoType: String, // "property_tour", "drone", etc.
+        duration: Number, // in seconds
+        isFeatured: Boolean,
+        autoplay: Boolean,
+        order: Number,
+        uploadedAt: Date,
+        platform: String, // "youtube", "vimeo", "direct"
+        videoId: String // for YouTube/Vimeo
+      }
+    ],
+    
+    virtualTour: {
+      url: String,
+      provider: String, // "matterport", "zillow", "custom"
+      embedCode: String,
+      thumbnail: String
+    },
+    
+    images360: [
+      {
+        id: String,
+        url: String,
+        roomName: String,
+        order: Number
+      }
+    ],
+    
+    floorPlans: [
+      {
+        id: String,
+        url: String,
+        title: String, // "Ground Floor", "First Floor"
+        order: Number
+      }
+    ],
+    
+    documents: [
+      {
+        id: String,
+        url: String,
+        title: String,
+        type: String, // "deed", "noc", "brochure"
+        isPublic: Boolean,
+        requiresApproval: Boolean,
+        password: String // hashed
+      }
+    ]
+  },
+  
+  mediaStats: {
+    totalImages: Number,
+    totalVideos: Number,
+    featuredImageId: String,
+    featuredVideoId: String,
+    galleryViews: Number,
+    videoViews: Number,
+    lastMediaUpdate: Date
+  }
+}
+```
+
+### 18. API ENDPOINTS FOR MEDIA
+
+```javascript
+// Image Management
+POST   /api/properties/:id/media/images/upload    // Upload multiple images
+PUT    /api/properties/:id/media/images/:imageId  // Update image details
+DELETE /api/properties/:id/media/images/:imageId  // Delete image
+POST   /api/properties/:id/media/images/reorder   // Reorder images
+PUT    /api/properties/:id/media/images/:imageId/featured // Set featured image
+
+// Video Management
+POST   /api/properties/:id/media/videos/upload    // Upload video
+POST   /api/properties/:id/media/videos/embed     // Add embed URL
+PUT    /api/properties/:id/media/videos/:videoId  // Update video details
+DELETE /api/properties/:id/media/videos/:videoId  // Delete video
+POST   /api/properties/:id/media/videos/reorder   // Reorder videos
+
+// 360° Images
+POST   /api/properties/:id/media/360/upload       // Upload 360 image
+
+// Floor Plans
+POST   /api/properties/:id/media/floorplans/upload // Upload floor plan
+
+// Documents
+POST   /api/properties/:id/media/documents/upload  // Upload document
+
+// Batch Operations
+POST   /api/media/compress                         // Compress images
+POST   /api/media/watermark                        // Apply watermark
+DELETE /api/media/unused                           // Delete unused media
+
+// Media Library
+GET    /api/media/library                          // Get all media
+GET    /api/media/stats                           // Get storage stats
+```
+
+### 19. IMPLEMENTATION PRIORITY
+
+**Phase 1 - Essential:**
+1. Multiple image upload with drag-and-drop
+2. Image reordering and featured image selection
+3. Video URL embedding (YouTube/Vimeo)
+4. Basic lightbox gallery viewer
+5. Image compression and optimization
+
+**Phase 2 - Enhanced:**
+6. Direct video upload
+7. 360° image viewer
+8. Floor plan upload and viewer
+9. Media library management
+10. Watermarking system
+
+**Phase 3 - Advanced:**
+11. Virtual tour integration
+12. Social media auto-sizing
+13. Advanced analytics
+14. Batch operations
+15. Mobile app features
+
+### 20. USER EXPERIENCE TIPS
+
+**For Property Listing:**
+1. Recommend 15-25 high-quality images per property
+2. First image should be the best exterior shot
+3. Include variety: exterior, interior, amenities, neighborhood
+4. Videos should be 1-3 minutes for property tours
+5. Add captions to help buyers understand what they're seeing
+6. Use 360° images for key rooms (living room, master bedroom)
+
+**Image Quality Guidelines:**
+- Minimum resolution: 1920 x 1080px
+- Take photos in good lighting (daytime preferred)
+- Clean and stage the property before shooting
+- Use a wide-angle lens for interiors
+- Ensure photos are sharp and in focus
+- Edit brightness/contrast if needed
+
+**Video Best Practices:**
+- Start with exterior establishing shot
+- Walk through property room by room
+- Maintain stable camera (use gimbal/stabilizer)
+- Add background music (royalty-free)
+- Include voiceover explaining features
+- End with contact information overlay
+
+---
+
+## TESTING CHECKLIST FOR MEDIA FEATURES
+
+- [ ] Upload single image successfully
+- [ ] Upload multiple images (10+ at once)
+- [ ] Drag and drop images to reorder
+- [ ] Set featured image
+- [ ] Add captions to images
+- [ ] Delete individual images
+- [ ] View image in lightbox with navigation
+- [ ] Upload video file (if direct upload)
+- [ ] Embed YouTube video successfully
+- [ ] Embed Vimeo video successfully
+- [ ] Play videos on frontend
+- [ ] Upload 360° image and interact with viewer
+- [ ] Upload floor plan and view/download
+- [ ] Check image compression is working
+- [ ] Verify images load quickly on frontend
+- [ ] Test on mobile device (upload and viewing)
+- [ ] Check storage usage display
+- [ ] Test bulk delete operation
+- [ ] Verify watermark applies correctly
+- [ ] Test all video player controls
+- [ ] Check social media image sizing
+
+---
+
+## RECOMMENDED LIBRARIES & TOOLS
+
+**Frontend (React):**
+- react-dropzone (file upload)
+- react-image-gallery (image carousel)
+- react-photo-view (lightbox)
+- react-player (video player)
+- pannellum (360° image viewer)
+- react-sortable-hoc (drag-and-drop reordering)
+- react-image-crop (image cropping)
+
+**Backend:**
+- multer (file upload handling)
+- sharp (image processing and compression)
+- fluent-ffmpeg (video processing)
+- cloudinary SDK (if using Cloudinary)
+- aws-sdk (if using AWS S3)
+
+**Video Players:**
+- Video.js (customizable HTML5 player)
+- Plyr (clean, accessible player)
+- React Player (supports YouTube, Vimeo, etc.)
+
+---
+
+This enhanced media system will make your property listings stand out with professional galleries, videos, and virtual tours! Customers will be able to fully explore properties online before visiting.

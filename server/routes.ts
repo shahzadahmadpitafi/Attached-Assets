@@ -1,7 +1,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertInquirySchema, insertPropertySchema, updatePropertySchema, updateInquirySchema, loginSchema } from "@shared/schema";
+import { insertInquirySchema, insertPropertySchema, updatePropertySchema, updateInquirySchema, loginSchema, insertMediaSchema, updateMediaSchema } from "@shared/schema";
 import bcrypt from "bcryptjs";
 
 function requireAdmin(req: Request, res: Response, next: NextFunction) {
@@ -187,6 +187,98 @@ export async function registerRoutes(
       res.json({ message: "Property deleted" });
     } catch (error) {
       res.status(500).json({ message: "Failed to delete property" });
+    }
+  });
+
+  // ── Public Media Routes ──
+
+  app.get("/api/properties/:id/media", async (req, res) => {
+    try {
+      const media = await storage.getMediaByProperty(req.params.id);
+      res.json(media);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch media" });
+    }
+  });
+
+  // ── Admin Media CRUD ──
+
+  app.get("/api/admin/properties/:id/media", requireAdmin, async (req, res) => {
+    try {
+      const type = req.query.type ? String(req.query.type) : undefined;
+      const media = await storage.getMediaByProperty(req.params.id, type);
+      res.json(media);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch media" });
+    }
+  });
+
+  app.post("/api/admin/properties/:id/media", requireAdmin, async (req, res) => {
+    try {
+      const mediaData = { ...req.body, propertyId: req.params.id };
+      const parsed = insertMediaSchema.safeParse(mediaData);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid media data", errors: parsed.error.flatten() });
+      }
+      const media = await storage.createMedia(parsed.data);
+      if (media.type === "image") {
+        await storage.syncPropertyImage(req.params.id);
+      }
+      res.status(201).json(media);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create media" });
+    }
+  });
+
+  app.patch("/api/admin/media/:id", requireAdmin, async (req, res) => {
+    try {
+      const parsed = updateMediaSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid media data", errors: parsed.error.flatten() });
+      }
+      const media = await storage.updateMedia(req.params.id, parsed.data);
+      if (!media) return res.status(404).json({ message: "Media not found" });
+      res.json(media);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update media" });
+    }
+  });
+
+  app.delete("/api/admin/media/:id", requireAdmin, async (req, res) => {
+    try {
+      const mediaItem = await storage.getMedia(req.params.id);
+      if (!mediaItem) return res.status(404).json({ message: "Media not found" });
+      await storage.deleteMedia(req.params.id);
+      if (mediaItem.type === "image") {
+        await storage.syncPropertyImage(mediaItem.propertyId);
+      }
+      res.json({ message: "Media deleted" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete media" });
+    }
+  });
+
+  app.post("/api/admin/properties/:id/media/reorder", requireAdmin, async (req, res) => {
+    try {
+      const { mediaIds } = req.body;
+      if (!Array.isArray(mediaIds)) {
+        return res.status(400).json({ message: "mediaIds must be an array" });
+      }
+      await storage.reorderMedia(req.params.id, mediaIds);
+      res.json({ message: "Media reordered" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to reorder media" });
+    }
+  });
+
+  app.post("/api/admin/media/:id/featured", requireAdmin, async (req, res) => {
+    try {
+      const media = await storage.getMedia(req.params.id);
+      if (!media) return res.status(404).json({ message: "Media not found" });
+      await storage.setFeaturedMedia(media.propertyId, media.id);
+      res.json({ message: "Featured media set" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to set featured media" });
     }
   });
 

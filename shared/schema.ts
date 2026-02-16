@@ -21,6 +21,23 @@ export const properties = pgTable("properties", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const propertyMedia = pgTable("property_media", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  propertyId: varchar("property_id").notNull(),
+  type: text("type").notNull(),
+  url: text("url").notNull(),
+  thumbnailUrl: text("thumbnail_url"),
+  caption: text("caption"),
+  tags: text("tags").array(),
+  roomType: text("room_type"),
+  isFeatured: boolean("is_featured").default(false),
+  sortOrder: integer("sort_order").default(0),
+  platform: text("platform"),
+  videoId: text("video_id"),
+  fileSize: integer("file_size"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const inquiries = pgTable("inquiries", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
@@ -54,6 +71,15 @@ export const loginSchema = z.object({
   password: z.string().min(1),
 });
 
+export const insertMediaSchema = createInsertSchema(propertyMedia).omit({ id: true, createdAt: true });
+export const updateMediaSchema = z.object({
+  caption: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  roomType: z.string().optional(),
+  isFeatured: z.boolean().optional(),
+  sortOrder: z.number().optional(),
+});
+
 export const updatePropertySchema = insertPropertySchema.partial();
 export const updateInquirySchema = z.object({
   status: z.enum(["new", "in_progress", "responded", "closed"]).optional(),
@@ -67,3 +93,5 @@ export type Inquiry = typeof inquiries.$inferSelect;
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
+export type PropertyMedia = typeof propertyMedia.$inferSelect;
+export type InsertMedia = z.infer<typeof insertMediaSchema>;

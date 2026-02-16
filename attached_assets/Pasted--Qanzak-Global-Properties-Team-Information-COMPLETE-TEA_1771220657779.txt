@@ -1,0 +1,531 @@
+# Qanzak Global Properties - Team Information
+
+## COMPLETE TEAM DETAILS
+
+Use this information to populate the "Team" or "About Us" section of your website and admin dashboard.
+
+---
+
+## Team Members
+
+### 1. Muhammad Naushad Anjum - Chief Executive Officer (CEO)
+
+**Position:** CEO & Founder
+**Role:** Chief Executive Officer
+**Department:** Executive Leadership
+**Specialization:** Strategic Planning, Business Development, Real Estate Investment
+
+**Responsibilities:**
+- Overall business strategy and vision
+- Major investment decisions
+- Partnership and collaboration development
+- Company growth and expansion
+- High-level client relationships
+
+**Contact Information:**
+- Phone: +92 331 1479800
+- Email: naushad@qanzakglobal.com (or ceo@qanzakglobal.com)
+- WhatsApp: +92 331 1479800
+
+**Bio/Description:**
+Muhammad Naushad Anjum is the visionary founder and CEO of Qanzak Global Properties. With extensive experience in the real estate industry, he has built Qanzak Global into a trusted name in Islamabad and Lahore's property market. His commitment to excellence and client satisfaction drives the company's success and reputation for delivering quality real estate solutions.
+
+**Display on Website:** Featured (Yes)
+**Show on Team Page:** Yes
+**Order Priority:** 1
+
+---
+
+### 2. Shahzad Ahmad - Director of Sales
+
+**Position:** Director of Sales
+**Role:** Sales Director
+**Department:** Sales & Marketing
+**Specialization:** Property Sales, Client Acquisition, Market Analysis, Commercial Properties
+
+**Responsibilities:**
+- Leading the sales team
+- Developing sales strategies
+- Managing high-value property transactions
+- Client relationship management
+- Market research and pricing strategies
+- Sales target achievement
+
+**Contact Information:**
+- Phone: +92 331 1479800
+- Email: shahzad@qanzakglobal.com (or sales@qanzakglobal.com)
+- WhatsApp: +92 331 1479800
+
+**Bio/Description:**
+Shahzad Ahmad serves as the Director of Sales at Qanzak Global Properties, bringing years of expertise in property sales and client relations. His deep understanding of the Islamabad and Lahore real estate markets, combined with his strategic approach to sales, has helped countless clients find their dream properties and make sound investment decisions.
+
+**Display on Website:** Featured (Yes)
+**Show on Team Page:** Yes
+**Order Priority:** 2
+
+---
+
+### 3. Adeel - Property Manager
+
+**Position:** Property Manager
+**Role:** Property Management Head
+**Department:** Property Management & Maintenance
+**Specialization:** Property Maintenance, Tenant Relations, Property Inspections, Facility Management
+
+**Responsibilities:**
+- Overseeing property maintenance operations
+- Coordinating repairs and renovations
+- Property inspections and quality checks
+- Tenant/occupant issue resolution
+- Vendor and contractor management
+- Ensuring properties are well-maintained
+- Maintenance scheduling and budgeting
+
+**Contact Information:**
+- Phone: +92 331 1479800
+- Email: adeel@qanzakglobal.com (or maintenance@qanzakglobal.com)
+- WhatsApp: +92 331 1479800
+
+**Bio/Description:**
+Adeel is the Property Manager at Qanzak Global Properties, responsible for ensuring all properties under management are maintained to the highest standards. With his meticulous attention to detail and commitment to quality, he ensures that both property owners and tenants receive exceptional service and timely maintenance solutions.
+
+**Display on Website:** Featured (Yes)
+**Show on Team Page:** Yes
+**Order Priority:** 3
+
+---
+
+### 4. Fatima - Client Relations Manager
+
+**Position:** Client Relations Manager
+**Role:** Client Relations Head
+**Department:** Customer Service & Client Relations
+**Specialization:** Customer Service, Client Communication, Inquiry Management, After-Sales Support
+
+**Responsibilities:**
+- Managing client inquiries and communications
+- Ensuring excellent customer service
+- Follow-up with potential clients
+- Client satisfaction and feedback management
+- Coordinating between clients and internal teams
+- Handling client concerns and complaints
+- Building long-term client relationships
+
+**Contact Information:**
+- Phone: +92 331 1479800
+- Email: fatima@qanzakglobal.com (or clientcare@qanzakglobal.com)
+- WhatsApp: +92 331 1479800
+
+**Bio/Description:**
+Fatima is the Client Relations Manager at Qanzak Global Properties, dedicated to providing exceptional service to every client. Her warm approach and professional expertise ensure that clients feel valued and supported throughout their property journey, from initial inquiry to post-purchase support and beyond.
+
+**Display on Website:** Featured (Yes)
+**Show on Team Page:** Yes
+**Order Priority:** 4
+
+---
+
+## TEAM PAGE LAYOUT SUGGESTIONS
+
+### Option 1: Grid Layout with Cards
+```
+[Photo]              [Photo]              [Photo]              [Photo]
+Muhammad Naushad     Shahzad Ahmad        Adeel                Fatima
+CEO                  Director of Sales    Property Manager     Client Relations Manager
+[Contact Button]     [Contact Button]     [Contact Button]     [Contact Button]
+```
+
+### Option 2: Leadership Hierarchy
+```
+                    [Large Photo]
+                Muhammad Naushad Anjum
+                        CEO
+                [Contact Information]
+
+    [Photo]                  [Photo]                  [Photo]
+Shahzad Ahmad                Adeel                    Fatima
+Director of Sales      Property Manager      Client Relations Manager
+```
+
+### Option 3: Detailed Cards with Descriptions
+```
+┌─────────────────────────────────────────┐
+│ [Photo]  Muhammad Naushad Anjum         │
+│          CEO & Founder                   │
+│          ────────────────────────        │
+│          [Bio paragraph...]              │
+│          📞 +92 331 1479800              │
+│          ✉️ naushad@qanzakglobal.com     │
+│          [WhatsApp] [Email] [LinkedIn]   │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## DATABASE SCHEMA FOR TEAM MEMBERS
+
+```javascript
+// TeamMembers Collection
+{
+  _id: ObjectId,
+  name: "Muhammad Naushad Anjum",
+  position: "CEO & Founder",
+  role: "Chief Executive Officer",
+  department: "Executive Leadership",
+  specialization: "Strategic Planning, Business Development, Real Estate Investment",
+  
+  bio: "Muhammad Naushad Anjum is the visionary founder...",
+  
+  responsibilities: [
+    "Overall business strategy and vision",
+    "Major investment decisions",
+    "Partnership and collaboration development"
+  ],
+  
+  contact: {
+    phone: "+923311479800",
+    email: "naushad@qanzakglobal.com",
+    whatsapp: "+923311479800"
+  },
+  
+  photo: "https://storage.url/team/naushad.jpg",
+  
+  socialMedia: {
+    linkedin: "https://linkedin.com/in/...",
+    facebook: "https://facebook.com/...",
+    instagram: "https://instagram.com/..."
+  },
+  
+  featured: true,
+  showOnWebsite: true,
+  showOnTeamPage: true,
+  displayOrder: 1,
+  
+  statistics: {
+    propertiesSold: 500,
+    yearsExperience: 15,
+    clientsSatisfied: 1000
+  },
+  
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+---
+
+## ADMIN PANEL - TEAM MANAGEMENT FORM
+
+### Add/Edit Team Member Form Fields:
+
+**Basic Information:**
+- Full Name (required)
+- Position/Title (required) - e.g., "CEO", "Director of Sales"
+- Role Description (required) - e.g., "Chief Executive Officer"
+- Department (dropdown)
+  - Executive Leadership
+  - Sales & Marketing
+  - Property Management
+  - Client Relations
+  - Finance
+  - Legal
+  - Other
+- Specialization (text area) - comma-separated
+
+**Bio & Description:**
+- Short Bio (150-200 words) - Rich text editor
+- Responsibilities (bullet points) - Add/Remove fields
+- Years of Experience (number)
+- Education (optional)
+- Certifications (optional)
+
+**Contact Information:**
+- Phone Number (required)
+- Email Address (required)
+- WhatsApp Number
+- Alternative Contact Number
+
+**Photo:**
+- Profile Photo Upload (square format recommended: 800x800px)
+- Photo should be professional headshot
+
+**Social Media:**
+- LinkedIn URL
+- Facebook Profile URL
+- Instagram Handle
+- Twitter/X Handle
+
+**Display Settings:**
+- Featured Team Member (checkbox) - appears on homepage
+- Show on Team Page (checkbox)
+- Show on Contact Page (checkbox)
+- Display Order (number) - for sorting on website
+- Active Status (toggle) - show/hide from website
+
+**Statistics (Optional):**
+- Properties Sold/Managed (number)
+- Years of Experience (number)
+- Happy Clients (number)
+
+**Internal Notes:**
+- Admin-only notes about this team member
+- Not visible on website
+
+---
+
+## WEBSITE DISPLAY SECTIONS
+
+### 1. Homepage - "Meet Our Team" Section
+```html
+<section class="team-section">
+  <h2>Meet Our Expert Team</h2>
+  <p>Our dedicated professionals are here to serve you</p>
+  
+  <!-- Show only Featured team members (4 cards) -->
+  <div class="team-grid">
+    <!-- Team Member Cards -->
+  </div>
+  
+  <button>View Full Team →</button>
+</section>
+```
+
+### 2. About Us Page - Full Team Display
+```html
+<section class="leadership-team">
+  <h2>Our Leadership</h2>
+  
+  <!-- CEO highlighted prominently -->
+  <div class="ceo-card-large">
+    [Muhammad Naushad Anjum details]
+  </div>
+  
+  <h3>Our Team</h3>
+  <!-- All other team members -->
+  <div class="team-grid">
+    [Shahzad, Adeel, Fatima cards]
+  </div>
+</section>
+```
+
+### 3. Contact Page - Quick Contact Team
+```html
+<section class="contact-team">
+  <h3>Get in Touch With Our Team</h3>
+  
+  <div class="contact-cards">
+    <div class="contact-card">
+      <h4>Sales Inquiries</h4>
+      <p>Shahzad Ahmad - Director of Sales</p>
+      <button>Contact Now</button>
+    </div>
+    
+    <div class="contact-card">
+      <h4>Property Management</h4>
+      <p>Adeel - Property Manager</p>
+      <button>Contact Now</button>
+    </div>
+    
+    <div class="contact-card">
+      <h4>Client Support</h4>
+      <p>Fatima - Client Relations</p>
+      <button>Contact Now</button>
+    </div>
+  </div>
+</section>
+```
+
+### 4. Property Listing Page - Agent Contact
+```html
+<!-- On each property detail page -->
+<div class="property-agent">
+  <h4>Contact Agent</h4>
+  <img src="agent-photo.jpg" alt="Agent Name">
+  <p><strong>Shahzad Ahmad</strong></p>
+  <p>Director of Sales</p>
+  <button>Call Now</button>
+  <button>WhatsApp</button>
+  <button>Email</button>
+</div>
+```
+
+---
+
+## TEAM MEMBER CARD DESIGN (HTML/CSS Example)
+
+```html
+<div class="team-card">
+  <div class="team-photo">
+    <img src="naushad.jpg" alt="Muhammad Naushad Anjum">
+  </div>
+  <div class="team-info">
+    <h3>Muhammad Naushad Anjum</h3>
+    <p class="position">CEO & Founder</p>
+    <p class="bio">Muhammad Naushad Anjum is the visionary founder...</p>
+    <div class="contact-buttons">
+      <a href="tel:+923311479800" class="btn-phone">
+        <i class="icon-phone"></i> Call
+      </a>
+      <a href="https://wa.me/923311479800" class="btn-whatsapp">
+        <i class="icon-whatsapp"></i> WhatsApp
+      </a>
+      <a href="mailto:naushad@qanzakglobal.com" class="btn-email">
+        <i class="icon-email"></i> Email
+      </a>
+    </div>
+    <div class="social-links">
+      <a href="#"><i class="icon-linkedin"></i></a>
+      <a href="#"><i class="icon-facebook"></i></a>
+    </div>
+  </div>
+</div>
+```
+
+---
+
+## INSTRUCTIONS FOR REPLIT
+
+Add this section to your website prompt:
+
+```
+### TEAM SECTION
+
+Create a team page and team components with the following members:
+
+1. **Muhammad Naushad Anjum** - CEO & Founder
+2. **Shahzad Ahmad** - Director of Sales  
+3. **Adeel** - Property Manager
+4. **Fatima** - Client Relations Manager
+
+Each team member should have:
+- Professional placeholder photo (use professional business headshots from Unsplash)
+- Name and position clearly displayed
+- Short bio (2-3 sentences)
+- Contact buttons (Call, WhatsApp, Email)
+- Social media icons
+- Responsive card design
+
+Display team members on:
+- Homepage (featured members in a 4-column grid)
+- Dedicated Team/About Us page (all members with full details)
+- Contact page (quick contact cards)
+- Individual property pages (assign agent to property)
+
+Make the design professional, modern, and trustworthy.
+```
+
+---
+
+## ADMIN PANEL INSTRUCTIONS
+
+Add this to your admin dashboard prompt:
+
+```
+### TEAM MANAGEMENT MODULE
+
+Create a team management section in the admin panel where the admin can:
+
+1. **View All Team Members** - Table/Grid view with photos, names, positions
+2. **Add New Team Member** - Form with all fields mentioned above
+3. **Edit Team Member** - Update any information
+4. **Delete Team Member** - With confirmation dialog
+5. **Reorder Team Members** - Drag-and-drop to change display order
+6. **Toggle Visibility** - Show/hide on website
+7. **Assign to Properties** - When adding/editing property, select agent from dropdown
+
+Pre-populate with these 4 team members:
+- Muhammad Naushad Anjum (CEO)
+- Shahzad Ahmad (Director of Sales)
+- Adeel (Property Manager)
+- Fatima (Client Relations Manager)
+
+Use placeholder professional photos from Unsplash for each person.
+```
+
+---
+
+## ADDITIONAL FEATURES
+
+### Auto-Assignment for Inquiries
+When a customer fills out a contact form or inquires about a property:
+- Sales inquiries → Automatically assigned to Shahzad Ahmad
+- Maintenance requests → Automatically assigned to Adeel
+- General inquiries → Automatically assigned to Fatima
+- High-value properties → Notify CEO (Muhammad Naushad Anjum)
+
+### Performance Tracking (Optional)
+Track each team member's performance:
+- Properties sold/managed
+- Client satisfaction ratings
+- Response times
+- Total inquiries handled
+- Revenue generated
+
+### Team Calendar (Future Enhancement)
+- Show team availability
+- Schedule meetings with team members
+- Automatic calendar integration
+
+---
+
+## EMAIL SIGNATURES
+
+### Muhammad Naushad Anjum
+```
+Muhammad Naushad Anjum
+Chief Executive Officer
+Qanzak Global Properties
+
+📍 House 66, F-11/1, Islamabad
+📞 +92 331 1479800
+✉️ naushad@qanzakglobal.com
+🌐 www.qanzakglobal.com
+
+Your Trusted Real Estate Partner
+```
+
+### Shahzad Ahmad
+```
+Shahzad Ahmad
+Director of Sales
+Qanzak Global Properties
+
+📍 House 66, F-11/1, Islamabad
+📞 +92 331 1479800
+✉️ shahzad@qanzakglobal.com
+🌐 www.qanzakglobal.com
+
+Turning Property Dreams into Reality
+```
+
+### Adeel
+```
+Adeel
+Property Manager
+Qanzak Global Properties
+
+📍 House 66, F-11/1, Islamabad
+📞 +92 331 1479800
+✉️ adeel@qanzakglobal.com
+🌐 www.qanzakglobal.com
+
+Excellence in Property Management
+```
+
+### Fatima
+```
+Fatima
+Client Relations Manager
+Qanzak Global Properties
+
+📍 House 66, F-11/1, Islamabad
+📞 +92 331 1479800
+✉️ fatima@qanzakglobal.com
+🌐 www.qanzakglobal.com
+
+Your Satisfaction is Our Priority
+```
+
+---
+
+This completes your team information setup for Qanzak Global Properties!
