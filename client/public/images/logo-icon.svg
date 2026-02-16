@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <g transform="translate(30, 25)">
+    <path d="M70 10 L135 55 L5 55 Z" fill="#1e40af" opacity="0.9"/>
+    <rect x="20" y="55" width="100" height="75" fill="#1e40af"/>
+    <rect x="28" y="63" width="24" height="18" rx="2" fill="#d4af37" opacity="0.8"/>
+    <rect x="88" y="63" width="24" height="18" rx="2" fill="#d4af37" opacity="0.8"/>
+    <rect x="55" y="85" width="30" height="45" rx="3" fill="#d4af37"/>
+    <rect x="66" y="102" width="8" height="8" rx="4" fill="#1e40af"/>
+    <path d="M70 2 L140 52 L135 55 L70 10 L5 55 L0 52 Z" fill="#d4af37"/>
+  </g>
+  <text x="100" y="170" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="bold" fill="#1e40af" text-anchor="middle" letter-spacing="4">
+    QGP
+  </text>
+</svg>

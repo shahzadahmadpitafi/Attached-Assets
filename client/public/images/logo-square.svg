@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <g id="house-icon" transform="translate(120, 40)">
+    <path d="M80 15 L155 65 L5 65 Z" fill="#1e40af" opacity="0.9"/>
+    <rect x="22" y="65" width="116" height="85" fill="#1e40af"/>
+    <rect x="32" y="75" width="28" height="20" rx="2" fill="#d4af37" opacity="0.8"/>
+    <rect x="100" y="75" width="28" height="20" rx="2" fill="#d4af37" opacity="0.8"/>
+    <rect x="62" y="100" width="36" height="50" rx="3" fill="#d4af37"/>
+    <circle cx="80" cy="122" r="3.5" fill="#1e40af"/>
+    <path d="M80 5 L160 60 L155 65 L80 15 L5 65 L0 60 Z" fill="#d4af37"/>
+  </g>
+  <g id="text" transform="translate(200, 220)">
+    <text font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="bold" fill="#1e40af" text-anchor="middle" letter-spacing="5">QANZAK</text>
+    <text x="0" y="35" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#1e40af" text-anchor="middle" letter-spacing="8" font-weight="600">GLOBAL PROPERTIES</text>
+    <line x1="-140" y1="48" x2="140" y2="48" stroke="#d4af37" stroke-width="2"/>
+    <text x="0" y="68" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" letter-spacing="4">YOUR TRUSTED REAL ESTATE PARTNER</text>
+  </g>
+</svg>

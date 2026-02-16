@@ -38,9 +38,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-6 py-3">
         <Link href="/" data-testid="link-home-logo">
-          <span className={`font-serif text-xl sm:text-2xl font-bold tracking-tight transition-colors ${showTransparent ? "text-white" : "text-foreground"}`}>
-            Qanzak<span className="text-[hsl(45,93%,47%)]"> Global</span>
-          </span>
+          <img
+            src={showTransparent ? "/images/logo-white.svg" : "/images/logo-horizontal.svg"}
+            alt="Qanzak Global Properties"
+            className="h-12 sm:h-14 w-auto object-contain transition-opacity"
+            data-testid="img-logo"
+          />
         </Link>
 
         <nav className="hidden lg:flex items-center gap-1" data-testid="nav-desktop">
