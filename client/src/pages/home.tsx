@@ -216,17 +216,25 @@ export default function HomePage() {
             {SERVICES.map((s) => {
               const Icon = iconMap[s.icon] || Home;
               return (
-                <Card key={s.id} className="p-6 hover-elevate overflow-visible" data-testid={`card-service-${s.id}`}>
-                  <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-primary" />
+                <Card key={s.id} className="group relative overflow-hidden min-h-[320px] flex flex-col justify-end p-0 border-0" data-testid={`card-service-${s.id}`}>
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[hsl(222,47%,11%)] via-[hsl(222,47%,11%)]/70 to-transparent" />
+                  <div className="relative p-6 z-10">
+                    <div className="w-10 h-10 rounded-md bg-[hsl(45,93%,47%)]/20 flex items-center justify-center mb-3">
+                      <Icon className="w-5 h-5 text-[hsl(45,93%,47%)]" />
+                    </div>
+                    <h3 className="font-semibold text-lg text-white">{s.title}</h3>
+                    <p className="text-sm text-gray-300 mt-2 leading-relaxed line-clamp-2">{s.description}</p>
+                    <Link href="/services">
+                      <Button size="sm" className="mt-4 bg-[hsl(45,93%,47%)] text-[hsl(222,47%,11%)] font-semibold gap-1" data-testid={`button-quote-${s.id}`}>
+                        Learn More <ArrowRight className="w-3 h-3" />
+                      </Button>
+                    </Link>
                   </div>
-                  <h3 className="font-semibold text-lg">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{s.description}</p>
-                  <Link href="/contact">
-                    <Button variant="outline" size="sm" className="mt-4 gap-1" data-testid={`button-quote-${s.id}`}>
-                      Get Quote <ArrowRight className="w-3 h-3" />
-                    </Button>
-                  </Link>
                 </Card>
               );
             })}
