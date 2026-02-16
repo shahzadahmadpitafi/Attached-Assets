@@ -9,9 +9,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <span className="font-serif text-2xl font-bold">
-              Qanzak<span className="text-[hsl(45,93%,47%)]"> Global</span>
-            </span>
+            <img src="/images/logo.png" alt="Qanzak Global Properties" className="h-10 w-auto object-contain" data-testid="img-footer-logo" />
             <p className="mt-4 text-sm text-gray-400 leading-relaxed">
               Premium real estate solutions in Islamabad and Lahore. We help you find the perfect property for your needs.
             </p>
