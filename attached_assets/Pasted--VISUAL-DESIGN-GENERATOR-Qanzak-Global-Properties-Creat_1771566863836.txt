@@ -1,0 +1,608 @@
+# VISUAL DESIGN GENERATOR - Qanzak Global Properties
+
+Create ACTUAL graphic design files (PNG/PDF images) not just text descriptions.
+
+## REPLIT PROMPT FOR VISUAL DESIGNS
+
+```
+CREATE A VISUAL DESIGN GENERATOR FOR QANZAK GLOBAL PROPERTIES
+
+Build an interactive web application that GENERATES ACTUAL IMAGE FILES (PNG/PDF) for:
+- Social media posts
+- Business cards  
+- Brochures
+- Flyers
+- Banners
+
+⚠️ IMPORTANT: Generate real graphic designs as downloadable images, NOT just text templates.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TECHNOLOGY STACK TO USE:
+
+1. HTML5 Canvas API - For generating images programmatically
+2. Fabric.js or Konva.js - For advanced graphics manipulation
+3. jsPDF library - For creating PDF files
+4. html2canvas - For converting HTML designs to images
+5. Canvas2Image - For downloading canvas as PNG/JPG
+
+OR
+
+Use Canva-like approach:
+- Create designs using HTML/CSS
+- Convert to image using html2canvas
+- Allow download as PNG/PDF
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPLEMENTATION STRUCTURE:
+
+PROJECT FILES:
+/public
+  /assets
+    /fonts (Montserrat, Poppins)
+    /images (property images from Unsplash)
+    /logo (Qanzak Global logo)
+  index.html
+  /generators
+    social-media-generator.html
+    business-card-generator.html
+    brochure-generator.html
+    flyer-generator.html
+  /js
+    canvas-generator.js
+    pdf-generator.js
+    design-templates.js
+  /css
+    styles.css
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MAIN INDEX PAGE:
+
+Create a dashboard with buttons:
+
+┌─────────────────────────────────────────┐
+│   QANZAK GLOBAL PROPERTIES              │
+│   Marketing Materials Generator         │
+├─────────────────────────────────────────┤
+│                                         │
+│   [📱 Social Media Posts]              │
+│   Generate Instagram/Facebook posts     │
+│                                         │
+│   [💳 Business Cards]                  │
+│   Create professional business cards    │
+│                                         │
+│   [📄 Brochures]                       │
+│   Design company brochures             │
+│                                         │
+│   [📋 Flyers]                          │
+│   Create promotional flyers            │
+│                                         │
+│   [🎨 Banners]                         │
+│   Generate web/social banners          │
+│                                         │
+│   [📦 Download All]                    │
+│   Get complete package as ZIP          │
+│                                         │
+└─────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXAMPLE: SOCIAL MEDIA POST GENERATOR
+
+HTML Structure:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Social Media Post Generator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="generator-container">
+    
+    <!-- Template Selection -->
+    <div class="template-selector">
+      <h2>Choose Template:</h2>
+      <button onclick="loadTemplate('luxury-villa')">Luxury Villa</button>
+      <button onclick="loadTemplate('apartment')">Apartment</button>
+      <button onclick="loadTemplate('maintenance')">Maintenance Service</button>
+      <button onclick="loadTemplate('testimonial')">Testimonial</button>
+    </div>
+
+    <!-- Preview Area -->
+    <div class="preview-section">
+      <h2>Preview:</h2>
+      <div id="design-canvas" style="width: 1080px; height: 1080px; position: relative;">
+        <!-- Design will be generated here -->
+      </div>
+    </div>
+
+    <!-- Customization Panel -->
+    <div class="customization-panel">
+      <h2>Customize:</h2>
+      <label>Property Title:</label>
+      <input type="text" id="property-title" value="Luxury Villa in DHA">
+      
+      <label>Price:</label>
+      <input type="text" id="price" value="PKR 8.5 Crore">
+      
+      <label>Location:</label>
+      <input type="text" id="location" value="DHA Phase 2, Islamabad">
+      
+      <label>Background Image:</label>
+      <input type="file" id="bg-image" accept="image/*">
+      
+      <label>Contact Person:</label>
+      <select id="contact-person">
+        <option>Shahzad Ahmad - Director of Sales</option>
+        <option>Fatima - Client Relations</option>
+        <option>Adeel - Property Manager</option>
+      </select>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button onclick="generatePNG()">Download as PNG</button>
+      <button onclick="generateJPG()">Download as JPG</button>
+      <button onclick="generatePDF()">Download as PDF</button>
+    </div>
+
+  </div>
+
+  <script>
+    // Template designs
+    const templates = {
+      'luxury-villa': {
+        background: 'url(villa-image.jpg)',
+        gradient: 'linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 64, 175, 0.9))',
+        layout: 'centered'
+      },
+      'apartment': {
+        background: 'url(apartment-image.jpg)',
+        gradient: 'linear-gradient(rgba(30, 64, 175, 0.6), rgba(15, 23, 42, 0.9))',
+        layout: 'split'
+      }
+      // ... more templates
+    };
+
+    function loadTemplate(templateName) {
+      const template = templates[templateName];
+      const canvas = document.getElementById('design-canvas');
+      
+      // Build the design
+      canvas.innerHTML = `
+        <div style="
+          width: 100%;
+          height: 100%;
+          background: ${template.background};
+          background-size: cover;
+          background-position: center;
+          position: relative;
+        ">
+          <div style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: ${template.gradient};
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+          ">
+            <!-- Logo -->
+            <img src="logo.png" style="width: 120px; margin-bottom: 40px;">
+            
+            <!-- Icon -->
+            <div style="
+              font-size: 80px;
+              margin-bottom: 20px;
+            ">🏰</div>
+            
+            <!-- Title -->
+            <h1 style="
+              font-size: 42px;
+              font-weight: 800;
+              margin: 0 0 20px 0;
+              text-align: center;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+            " id="canvas-title">LUXURY VILLA FOR SALE</h1>
+            
+            <!-- Location -->
+            <div style="
+              font-size: 24px;
+              margin-bottom: 30px;
+              color: #d4af37;
+            ">📍 <span id="canvas-location">DHA Phase 2, Islamabad</span></div>
+            
+            <!-- Features -->
+            <div style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 15px;
+              margin-bottom: 30px;
+              font-size: 18px;
+            ">
+              <div>✨ 5 Bedrooms | 6 Bathrooms</div>
+              <div>✨ 1 Kanal Plot</div>
+              <div>✨ Modern Kitchen</div>
+              <div>✨ Private Garden</div>
+            </div>
+            
+            <!-- Price -->
+            <div style="
+              font-size: 48px;
+              font-weight: 800;
+              color: #d4af37;
+              margin: 30px 0;
+            ">💰 <span id="canvas-price">PKR 8.5 Crore</span></div>
+            
+            <!-- CTA -->
+            <div style="
+              font-size: 24px;
+              margin-bottom: 40px;
+            ">Your Dream Home Awaits! 🏡</div>
+            
+            <!-- Contact Info -->
+            <div style="
+              background: rgba(255, 255, 255, 0.15);
+              padding: 25px 40px;
+              border-radius: 15px;
+              backdrop-filter: blur(10px);
+              text-align: center;
+            ">
+              <div style="font-size: 18px; margin-bottom: 10px;">
+                <strong>Shahzad Ahmad</strong><br>
+                Director of Sales
+              </div>
+              <div style="font-size: 16px;">
+                📞 +92 331 1479800<br>
+                📧 info@qanzakglobal.com<br>
+                🌐 properties.qanzakglobal.com
+              </div>
+            </div>
+            
+            <!-- Footer -->
+            <div style="
+              position: absolute;
+              bottom: 30px;
+              font-size: 16px;
+              text-align: center;
+            ">
+              <strong>QANZAK GLOBAL PROPERTIES</strong><br>
+              Your Trusted Real Estate Partner<br>
+              House 66, F-11/1, Islamabad
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function generatePNG() {
+      const canvas = document.getElementById('design-canvas');
+      
+      html2canvas(canvas, {
+        width: 1080,
+        height: 1080,
+        scale: 2, // Higher quality
+        backgroundColor: null
+      }).then(canvas => {
+        // Convert to PNG and download
+        canvas.toBlob(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = 'qanzak-social-post.png';
+          link.href = url;
+          link.click();
+        });
+      });
+    }
+
+    function generateJPG() {
+      const canvas = document.getElementById('design-canvas');
+      
+      html2canvas(canvas, {
+        width: 1080,
+        height: 1080,
+        scale: 2
+      }).then(canvas => {
+        canvas.toBlob(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = 'qanzak-social-post.jpg';
+          link.href = url;
+          link.click();
+        }, 'image/jpeg', 0.95);
+      });
+    }
+
+    // Load default template on page load
+    window.onload = function() {
+      loadTemplate('luxury-villa');
+    };
+  </script>
+</body>
+</html>
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXAMPLE: BUSINESS CARD GENERATOR
+
+```javascript
+function generateBusinessCard(name, title) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 1050;  // 3.5 inches at 300 DPI
+  canvas.height = 600;  // 2 inches at 300 DPI
+  const ctx = canvas.getContext('2d');
+
+  // Front Side
+  // Background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, 1050, 600);
+
+  // Gold accent bar
+  ctx.fillStyle = '#d4af37';
+  ctx.fillRect(0, 0, 1050, 15);
+
+  // Logo (you'll need to load image)
+  const logo = new Image();
+  logo.src = 'logo.png';
+  logo.onload = function() {
+    ctx.drawImage(logo, 50, 80, 150, 150);
+  };
+
+  // Company Name
+  ctx.fillStyle = '#1e40af';
+  ctx.font = 'bold 32px Montserrat';
+  ctx.fillText('QANZAK GLOBAL PROPERTIES', 220, 120);
+
+  // Person Name
+  ctx.fillStyle = '#1f2937';
+  ctx.font = 'bold 42px Montserrat';
+  ctx.fillText(name, 220, 200);
+
+  // Title
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '24px Montserrat';
+  ctx.fillText(title, 220, 240);
+
+  // Contact Info
+  ctx.fillStyle = '#1f2937';
+  ctx.font = '22px Arial';
+  ctx.fillText('📞 +92 331 1479800', 220, 320);
+  ctx.fillText('📧 info@qanzakglobal.com', 220, 360);
+  ctx.fillText('🌐 properties.qanzakglobal.com', 220, 400);
+
+  // Address
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '18px Arial';
+  ctx.fillText('House 66, F-11/1, Islamabad, Pakistan', 220, 450);
+
+  // Download
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = `business-card-${name.replace(' ', '-')}.png`;
+    link.href = url;
+    link.click();
+  });
+}
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXAMPLE: PDF BROCHURE GENERATOR
+
+```javascript
+// Using jsPDF library
+function generateBrochurePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4'
+  });
+
+  // Page 1 - Cover
+  doc.setFillColor(30, 64, 175);
+  doc.rect(0, 0, 210, 297, 'F');
+  
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(48);
+  doc.setFont('helvetica', 'bold');
+  doc.text('QANZAK GLOBAL', 105, 120, { align: 'center' });
+  doc.text('PROPERTIES', 105, 140, { align: 'center' });
+  
+  doc.setFontSize(20);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Your Trusted Real Estate Partner', 105, 160, { align: 'center' });
+
+  // Page 2 - About Us
+  doc.addPage();
+  doc.setFillColor(255, 255, 255);
+  doc.rect(0, 0, 210, 297, 'F');
+  
+  doc.setTextColor(30, 64, 175);
+  doc.setFontSize(32);
+  doc.setFont('helvetica', 'bold');
+  doc.text('WHO WE ARE', 20, 30);
+  
+  doc.setTextColor(31, 41, 55);
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'normal');
+  const aboutText = `Qanzak Global Properties is a premier real estate company serving Islamabad and Lahore. With over 15 years of industry experience, we have helped thousands of clients find their dream properties and make sound investment decisions.`;
+  
+  doc.text(aboutText, 20, 50, { maxWidth: 170, align: 'justify' });
+
+  // Add more pages...
+
+  // Save PDF
+  doc.save('qanzak-brochure.pdf');
+}
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+REQUIRED LIBRARIES TO INCLUDE:
+
+Add these in your HTML <head>:
+
+```html
+<!-- For Canvas to Image conversion -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- For PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- For ZIP file creation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- For saving files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+```
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FEATURE REQUIREMENTS:
+
+1. REAL-TIME PREVIEW
+   - Show design as you customize
+   - Live updates when changing text/colors
+
+2. CUSTOMIZATION OPTIONS
+   - Change text content
+   - Upload custom images
+   - Adjust colors
+   - Modify fonts
+   - Add/remove elements
+
+3. DOWNLOAD OPTIONS
+   - PNG (transparent & with background)
+   - JPG (high quality)
+   - PDF (print-ready, 300 DPI)
+   - SVG (if applicable)
+
+4. BATCH GENERATION
+   - Generate all materials at once
+   - Download as ZIP file
+
+5. TEMPLATES
+   - Pre-designed templates
+   - Multiple style variations
+   - Easy template switching
+
+6. PRINT-READY
+   - 300 DPI resolution
+   - Correct dimensions for printing
+   - CMYK color mode (if possible)
+   - Bleed and safe zones
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DESIGN TEMPLATES TO CREATE:
+
+SOCIAL MEDIA POSTS (1080x1080px):
+✓ Luxury Property Post (with gradient overlay)
+✓ Service Promotion Post (split layout)
+✓ Testimonial Post (quote card style)
+✓ Tips & Advice Post (infographic style)
+✓ Announcement Post (bold text focus)
+
+BUSINESS CARDS (3.5" x 2" at 300 DPI):
+✓ CEO Card
+✓ Director of Sales Card
+✓ Property Manager Card
+✓ Client Relations Card
+
+BROCHURES:
+✓ Tri-fold Company Profile (A4)
+✓ Property Listing Brochure (A4 bi-fold)
+
+FLYERS (A5):
+✓ Property Launch Flyer
+✓ Service Promotion Flyer
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+USER INTERFACE FLOW:
+
+1. User opens generator
+2. Selects material type (post/card/brochure)
+3. Chooses template
+4. Customizes content in form
+5. Sees live preview
+6. Downloads as PNG/JPG/PDF
+7. Can generate more or download all
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QUALITY REQUIREMENTS:
+
+✓ All images must be high resolution (min 2160x2160 for social media)
+✓ Business cards must be 300 DPI (1050x600px)
+✓ Print materials must be 300 DPI
+✓ Colors must be vibrant and professional
+✓ Text must be crisp and readable
+✓ Layouts must be well-balanced
+✓ Brand consistency across all materials
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DELIVERABLES:
+
+When user clicks "Generate", they should receive:
+
+1. IMMEDIATE PREVIEW - See the design on screen
+2. DOWNLOAD BUTTON - Get PNG/JPG/PDF file
+3. EDIT OPTION - Modify and regenerate
+4. SAVE TEMPLATE - Save customization for later
+5. DOWNLOAD ALL - Get complete set as ZIP
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMPORTANT: This is NOT a text template generator. This must create actual graphic image files that can be:
+- Posted directly to social media
+- Printed by a printing company
+- Sent to clients
+- Used immediately without any additional design work
+
+Build this as a professional design tool, like a simplified Canva, specifically for Qanzak Global Properties.
+```
+
+---
+
+## ADDITIONAL OPTION: Use Canva API Integration
+
+If the above is too complex, you can also integrate with Canva API:
+
+```javascript
+// This would connect to Canva's API to generate designs
+// But requires Canva Partner account
+
+// Alternative: Create designs in Canva manually and save as templates
+// Then provide template links for easy duplication
+```
+
+---
+
+## QUICK START IMPLEMENTATION
+
+Simplest approach using HTML2Canvas:
+
+1. Create beautiful HTML/CSS designs
+2. Use html2canvas to convert to image
+3. Download as PNG
+4. Convert PNG to PDF if needed
+
+This way you get actual visual files, not just text templates!
