@@ -571,22 +571,59 @@ function SocialPostPreview({ form, contact }: { form: SocialFormData; contact: t
 
 function BusinessCardPreview({ person }: { person: typeof TEAM[0] }) {
   return (
-    <div style={{ width: "100%", height: "100%", background: "#fff", display: "flex", flexDirection: "column", position: "relative", fontFamily: "'Inter', Arial, sans-serif" }}>
-      <div style={{ height: 8, background: "#d4af37" }} />
-      <div style={{ flex: 1, padding: "20px 28px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-        <div>
-          <img src={LOGO_PRIMARY} alt="Qanzak Global Properties" style={{ height: 50, marginBottom: 10 }} data-testid="img-preview-logo" />
-          <div style={{ fontSize: 20, fontWeight: 800, color: "#1f2937", marginBottom: 2 }} data-testid="text-preview-name">{person.name}</div>
-          <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 16 }} data-testid="text-preview-role">{person.role}</div>
+    <div style={{ width: "100%", height: "100%", display: "flex", position: "relative", fontFamily: "'Inter', Arial, sans-serif", overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #0c1a3a 0%, #1e3a6e 50%, #0f172a 100%)" }} />
+      <div style={{ position: "absolute", top: -40, right: -40, width: 180, height: 180, borderRadius: "50%", background: "rgba(212,175,55,0.06)" }} />
+      <div style={{ position: "absolute", bottom: -60, left: -30, width: 200, height: 200, borderRadius: "50%", background: "rgba(212,175,55,0.04)" }} />
+
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: "linear-gradient(90deg, #d4af37, #f5d76e, #d4af37)" }} />
+
+      <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", padding: "24px 30px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ fontSize: 22, fontWeight: 800, color: "#ffffff", marginBottom: 3, letterSpacing: 0.5 }} data-testid="text-preview-name">{person.name}</div>
+            <div style={{ fontSize: 11, color: "#d4af37", fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 }} data-testid="text-preview-role">{person.role}</div>
+            <div style={{ width: 40, height: 2, background: "linear-gradient(90deg, #d4af37, transparent)", marginBottom: 16 }} />
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 7, fontSize: 10 }} data-testid="text-preview-contact">
+            <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#e2e8f0" }}>
+              <div style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <Phone style={{ width: 10, height: 10, color: "#d4af37" }} />
+              </div>
+              +92 331 1479800
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#e2e8f0" }}>
+              <div style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <Mail style={{ width: 10, height: 10, color: "#d4af37" }} />
+              </div>
+              {person.email}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#e2e8f0" }}>
+              <div style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <Globe style={{ width: 10, height: 10, color: "#d4af37" }} />
+              </div>
+              properties.qanzakglobal.com
+            </div>
+          </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 4, fontSize: 10, color: "#374151" }} data-testid="text-preview-contact">
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}><Phone style={{ width: 10, height: 10, color: "#1e40af" }} /> +92 331 1479800</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}><Mail style={{ width: 10, height: 10, color: "#1e40af" }} /> {person.email}</div>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}><Globe style={{ width: 10, height: 10, color: "#1e40af" }} /> properties.qanzakglobal.com</div>
-          <div style={{ color: "#6b7280", marginTop: 4, fontSize: 9 }}>House 66, F-11/1, Islamabad, Pakistan</div>
+
+        <div style={{ width: 160, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", paddingTop: 4 }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 34, marginBottom: 12 }} data-testid="img-preview-logo" />
+            <div style={{ width: 1, height: 60, background: "linear-gradient(180deg, #d4af37, rgba(212,175,55,0.1))" }} />
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 4, color: "#94a3b8", fontSize: 8, marginBottom: 2 }}>
+              <MapPin style={{ width: 8, height: 8 }} />
+              <span>House 66, F-11/1</span>
+            </div>
+            <div style={{ color: "#64748b", fontSize: 7.5 }}>Islamabad, Pakistan</div>
+          </div>
         </div>
       </div>
-      <div style={{ height: 4, background: "#1e40af" }} />
+
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 4, background: "linear-gradient(90deg, #d4af37, #f5d76e, #d4af37)" }} />
     </div>
   );
 }
