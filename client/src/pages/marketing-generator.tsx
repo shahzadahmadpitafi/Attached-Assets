@@ -8,6 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { COMPANY, TEAM } from "@/lib/constants";
 import { Download, FileImage, CreditCard, FileText, Megaphone, ArrowLeft, Package, MapPin, Star, Check, Phone, Mail, Globe } from "lucide-react";
 
+const LOGO_WHITE = "/images/logo-white.svg";
+const LOGO_PRIMARY = "/images/logo-primary.svg";
+const LOGO_ICON = "/images/logo-icon.svg";
+
 type MaterialType = "social" | "card" | "brochure" | "flyer";
 type SocialTemplate = "property" | "service" | "testimonial" | "tips" | "announcement";
 
@@ -439,7 +443,7 @@ function SocialPostPreview({ form, contact }: { form: SocialFormData; contact: t
     return (
       <div style={{ width: "100%", height: "100%", background: "#0f172a", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 40, color: "#fff", position: "relative" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, background: "#d4af37" }} />
-        <div style={{ fontSize: 14, fontWeight: 700, color: "#d4af37", letterSpacing: 3, marginBottom: 20 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 36, marginBottom: 20 }} data-testid="img-preview-logo" />
         <div style={{ display: "flex", gap: 4, marginBottom: 24 }} data-testid="text-preview-rating">
           {[1,2,3,4,5].map(i => <Star key={i} style={{ width: 20, height: 20, color: "#d4af37", fill: "#d4af37" }} />)}
         </div>
@@ -468,7 +472,7 @@ function SocialPostPreview({ form, contact }: { form: SocialFormData; contact: t
     ];
     return (
       <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg, #1e40af 0%, #0f172a 100%)", display: "flex", flexDirection: "column", padding: 36, color: "#fff", position: "relative" }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: "#d4af37", letterSpacing: 3, marginBottom: 8 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 28, alignSelf: "flex-start", marginBottom: 8 }} data-testid="img-preview-logo" />
         <div style={{ fontSize: 22, fontWeight: 800, marginBottom: 24, lineHeight: 1.2 }} data-testid="text-preview-title">{form.title || "5 ESSENTIAL TIPS FOR HOME BUYERS"}</div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10 }} data-testid="text-preview-features">
           {tips.slice(0, 5).map((tip, i) => (
@@ -489,7 +493,7 @@ function SocialPostPreview({ form, contact }: { form: SocialFormData; contact: t
   if (form.template === "service") {
     return (
       <div style={{ width: "100%", height: "100%", background: "linear-gradient(180deg, #1e40af 0%, #0f172a 100%)", display: "flex", flexDirection: "column", padding: 36, color: "#fff", position: "relative" }}>
-        <div style={{ fontSize: 12, fontWeight: 700, color: "#d4af37", letterSpacing: 3, marginBottom: 12 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 28, alignSelf: "flex-start", marginBottom: 12 }} data-testid="img-preview-logo" />
         <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }} data-testid="text-preview-title">{form.title}</div>
         <div style={{ fontSize: 14, color: "#d4af37", marginBottom: 20 }} data-testid="text-preview-subtitle">{form.subtitle}</div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }} data-testid="text-preview-features">
@@ -513,7 +517,7 @@ function SocialPostPreview({ form, contact }: { form: SocialFormData; contact: t
     return (
       <div style={{ width: "100%", height: "100%", background: "#0f172a", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 40, color: "#fff", position: "relative", textAlign: "center" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, background: "#d4af37" }} />
-        <div style={{ fontSize: 12, fontWeight: 700, color: "#d4af37", letterSpacing: 4, marginBottom: 20 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 36, marginBottom: 20 }} data-testid="img-preview-logo" />
         <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 12, lineHeight: 1.2, maxWidth: 440 }} data-testid="text-preview-title">{form.title}</div>
         <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 16, color: "#d4af37", marginBottom: 20, fontWeight: 600 }} data-testid="text-preview-location">
           <MapPin style={{ width: 16, height: 16 }} /> {form.location}
@@ -537,7 +541,7 @@ function SocialPostPreview({ form, contact }: { form: SocialFormData; contact: t
   return (
     <div style={{ width: "100%", height: "100%", background: `linear-gradient(135deg, ${form.bgColor} 0%, #0f172a 100%)`, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 36, color: "#fff", position: "relative" }}>
       <div>
-        <div style={{ fontSize: 12, fontWeight: 700, color: "#d4af37", letterSpacing: 3, marginBottom: 16 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 28, marginBottom: 16 }} data-testid="img-preview-logo" />
         <div style={{ fontSize: 24, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }} data-testid="text-preview-title">{form.title}</div>
         <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 14, color: "#d4af37", marginBottom: 16 }} data-testid="text-preview-location">
           <MapPin style={{ width: 14, height: 14 }} /> {form.location}
@@ -571,7 +575,7 @@ function BusinessCardPreview({ person }: { person: typeof TEAM[0] }) {
       <div style={{ height: 8, background: "#d4af37" }} />
       <div style={{ flex: 1, padding: "20px 28px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#1e40af", letterSpacing: 2, marginBottom: 14 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+          <img src={LOGO_PRIMARY} alt="Qanzak Global Properties" style={{ height: 50, marginBottom: 10 }} data-testid="img-preview-logo" />
           <div style={{ fontSize: 20, fontWeight: 800, color: "#1f2937", marginBottom: 2 }} data-testid="text-preview-name">{person.name}</div>
           <div style={{ fontSize: 11, color: "#6b7280", marginBottom: 16 }} data-testid="text-preview-role">{person.role}</div>
         </div>
@@ -592,7 +596,7 @@ function BrochurePreview({ type }: { type: "company" | "property" }) {
     return (
       <div style={{ width: "100%", height: "100%", background: "#fff", display: "flex", flexDirection: "column", position: "relative" }}>
         <div style={{ background: "linear-gradient(180deg, #1e40af, #0f172a)", flex: "0 0 45%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#fff", padding: 40, textAlign: "center" }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", letterSpacing: 3, marginBottom: 16 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+          <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 40, marginBottom: 20 }} data-testid="img-preview-logo" />
           <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 8 }} data-testid="text-preview-title">EXCLUSIVE PROPERTY</div>
           <div style={{ fontSize: 28, fontWeight: 800, marginBottom: 16 }}>LISTING</div>
           <div style={{ width: 60, height: 2, background: "#d4af37", marginBottom: 16 }} />
@@ -625,6 +629,7 @@ function BrochurePreview({ type }: { type: "company" | "property" }) {
   return (
     <div style={{ width: "100%", height: "100%", background: "#fff", display: "flex", flexDirection: "column", position: "relative" }}>
       <div style={{ background: "linear-gradient(180deg, #1e40af, #0f172a)", flex: "0 0 35%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", color: "#fff", padding: 40, textAlign: "center" }}>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 44, marginBottom: 16 }} data-testid="img-preview-logo" />
         <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 4 }} data-testid="text-preview-title">QANZAK GLOBAL</div>
         <div style={{ fontSize: 30, fontWeight: 800, marginBottom: 12 }}>PROPERTIES</div>
         <div style={{ width: 60, height: 2, background: "#d4af37", marginBottom: 12 }} />
@@ -670,7 +675,7 @@ function FlyerPreview({ form, contact }: { form: FlyerFormData; contact: typeof 
     <div style={{ width: "100%", height: "100%", background: "linear-gradient(180deg, #1e40af 0%, #0f172a 55%, #0f172a 100%)", display: "flex", flexDirection: "column", color: "#fff", position: "relative" }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, background: "#d4af37" }} />
       <div style={{ flex: "0 0 40%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: 30 }}>
-        <div style={{ fontSize: 10, fontWeight: 700, color: "#d4af37", letterSpacing: 3, marginBottom: 14 }} data-testid="text-preview-brand">QANZAK GLOBAL PROPERTIES</div>
+        <img src={LOGO_WHITE} alt="Qanzak Global Properties" style={{ height: 32, marginBottom: 14 }} data-testid="img-preview-logo" />
         <div style={{ fontSize: 22, fontWeight: 800, marginBottom: 8, lineHeight: 1.2 }} data-testid="text-preview-title">{form.title}</div>
         <div style={{ fontSize: 14, color: "#d4af37", fontWeight: 600 }} data-testid="text-preview-subtitle">{form.subtitle}</div>
       </div>
