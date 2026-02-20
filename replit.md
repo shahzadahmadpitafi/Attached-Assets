@@ -21,9 +21,11 @@ Professional real estate website for Qanzak Global Properties, a property sales,
 - `GET /api/properties` - List properties with optional query filters
 - `GET /api/properties/:id` - Get single property
 - `GET /api/properties/:id/media` - Get all media for a property (public)
+- `GET /api/team` - List active team members (public)
 - `POST /api/inquiries` - Submit contact form
 - `POST /api/uploads/request-url` - Get presigned upload URL (admin auth required)
 - `GET /objects/*` - Serve uploaded files from object storage
+- `GET/POST/PATCH/DELETE /api/admin/team` - Team member CRUD (admin auth required)
 
 ## Key Features
 - WhatsApp floating button on all pages
@@ -37,6 +39,7 @@ Professional real estate website for Qanzak Global Properties, a property sales,
 - `property_media` - id, propertyId, type (image/video/floorplan), url, thumbnailUrl, caption, tags, roomType, isFeatured, sortOrder, platform, videoId, fileSize, createdAt
 - `inquiries` - id, name, email, phone, service, message, status, notes, propertyId, createdAt
 - `admin_users` - id, email, passwordHash, name, role, createdAt, lastLogin
+- `team_members` - id, name, role, department, specialization, bio, shortBio, email, phone, whatsapp, photo, sortOrder, isActive, createdAt
 
 ## Multi-Media Gallery System
 - **Upload flow**: Admin uploads via drag-and-drop -> presigned URL from object storage -> PUT file directly -> POST metadata to API
@@ -54,11 +57,13 @@ Professional real estate website for Qanzak Global Properties, a property sales,
 - Property CRUD: list with search, add/edit form with validation, delete with confirmation
 - Media management: upload zone, gallery manager, video embed form, floor plan upload
 - Inquiry management: list with status filters, status updates (new/contacted/resolved), notes, delete
-- Sidebar navigation: Dashboard, Properties, Add Property, Inquiries
+- Team management: add/edit/delete members, photo upload, reorder, active/inactive toggle
+- Sidebar navigation: Dashboard, Properties, Add Property, Inquiries, Team Members
 - Protected routes redirect to /admin/login when not authenticated
 - Admin API endpoints all under /api/admin/* with session middleware
 
 ## Recent Changes
+- 2026-02-20: Added dynamic team member management: database table, admin CRUD page with photo upload, about page now uses API data
 - 2026-02-16: Added multi-media gallery system with object storage uploads, admin media management, public gallery with lightbox, video embeds, floor plans
 - 2026-02-16: Added admin dashboard with login, property CRUD, inquiry management, and dashboard metrics
 - 2026-02-16: Initial build with 10 seeded properties, 5 pages, full API
