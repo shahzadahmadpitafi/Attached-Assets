@@ -330,9 +330,11 @@ export async function registerRoutes(
 
   // ── Admin Team Members CRUD ──
 
-  app.get("/api/admin/team", requireAdmin, async (_req, res) => {
+  app.get("/api/admin/team", requireAdmin, async (req, res) => {
     try {
-      const members = await storage.getTeamMembers(false);
+      const search = req.query.search as string | undefined;
+      const department = req.query.department as string | undefined;
+      const members = await storage.getTeamMembers(false, { search, department });
       res.json(members);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch team members" });

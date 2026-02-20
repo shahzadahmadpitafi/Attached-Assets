@@ -2,11 +2,11 @@ import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { COMPANY } from "@/lib/constants";
 import type { TeamMember } from "@shared/schema";
-import { ArrowRight, Target, Shield, Heart, Award, Phone, Mail, Loader2 } from "lucide-react";
-import { SiWhatsapp } from "react-icons/si";
+import { ArrowRight, Target, Shield, Heart, Award, Phone, Mail, Loader2, Briefcase } from "lucide-react";
+import { SiWhatsapp, SiLinkedin, SiFacebook, SiInstagram } from "react-icons/si";
 
 const values = [
   { icon: Target, title: "Excellence", description: "We strive for the highest standards in every interaction and transaction." },
@@ -121,8 +121,19 @@ export default function AboutPage() {
                       <h3 className="font-serif text-2xl font-bold" data-testid="text-ceo-name">{ceo.name}</h3>
                       <p className="text-[hsl(45,93%,47%)] font-semibold">{ceo.role}</p>
                       <p className="text-sm text-muted-foreground mt-1">{ceo.department}</p>
+                      {ceo.yearsOfExperience ? (
+                        <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1 justify-center sm:justify-start">
+                          <Briefcase className="w-3.5 h-3.5" /> {ceo.yearsOfExperience}+ years of experience
+                        </p>
+                      ) : null}
                       <p className="text-muted-foreground mt-3 leading-relaxed">{ceo.bio}</p>
-                      <p className="text-sm text-muted-foreground mt-2 italic">{ceo.specialization}</p>
+                      {ceo.expertise && ceo.expertise.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-3 justify-center sm:justify-start">
+                          {ceo.expertise.map((e, i) => (
+                            <Badge key={i} variant="outline" className="text-xs">{e}</Badge>
+                          ))}
+                        </div>
+                      )}
                       <div className="flex flex-wrap items-center gap-2 mt-4 justify-center sm:justify-start">
                         {ceo.phone && (
                           <a href={`tel:${ceo.phone}`}>
@@ -143,6 +154,13 @@ export default function AboutPage() {
                             <Mail className="w-3.5 h-3.5" /> Email
                           </Button>
                         </a>
+                        {ceo.socialLinkedin && (
+                          <a href={ceo.socialLinkedin} target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="sm" className="gap-1.5">
+                              <SiLinkedin className="w-3.5 h-3.5" /> LinkedIn
+                            </Button>
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -162,9 +180,19 @@ export default function AboutPage() {
                       <h3 className="font-semibold text-lg">{m.name}</h3>
                       <p className="text-sm text-[hsl(45,93%,47%)] font-medium">{m.role}</p>
                       <p className="text-xs text-muted-foreground mt-0.5">{m.department}</p>
+                      {m.yearsOfExperience ? (
+                        <p className="text-xs text-muted-foreground mt-0.5">{m.yearsOfExperience}+ years experience</p>
+                      ) : null}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-3 leading-relaxed text-center">{m.bio}</p>
-                    <div className="flex items-center justify-center gap-2 mt-4">
+                    <p className="text-sm text-muted-foreground mt-3 leading-relaxed text-center">{m.shortBio || m.bio}</p>
+                    {m.expertise && m.expertise.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-3 justify-center">
+                        {m.expertise.slice(0, 3).map((e, i) => (
+                          <Badge key={i} variant="outline" className="text-xs">{e}</Badge>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex items-center justify-center gap-2 mt-4 flex-wrap">
                       {m.phone && (
                         <a href={`tel:${m.phone}`}>
                           <Button variant="outline" size="sm" className="gap-1.5">
@@ -185,6 +213,25 @@ export default function AboutPage() {
                         </Button>
                       </a>
                     </div>
+                    {(m.socialLinkedin || m.socialFacebook || m.socialInstagram) && (
+                      <div className="flex items-center justify-center gap-3 mt-3">
+                        {m.socialLinkedin && (
+                          <a href={m.socialLinkedin} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
+                            <SiLinkedin className="w-4 h-4" />
+                          </a>
+                        )}
+                        {m.socialFacebook && (
+                          <a href={m.socialFacebook} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
+                            <SiFacebook className="w-4 h-4" />
+                          </a>
+                        )}
+                        {m.socialInstagram && (
+                          <a href={`https://instagram.com/${m.socialInstagram.replace("@", "")}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">
+                            <SiInstagram className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </Card>
                 ))}
               </div>

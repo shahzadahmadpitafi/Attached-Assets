@@ -7,7 +7,7 @@ import {
   properties, inquiries, adminUsers, propertyMedia, teamMembers,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, gte, lte, and, desc, asc, count, sql } from "drizzle-orm";
+import { eq, gte, lte, and, desc, asc, count, sql, ilike, or } from "drizzle-orm";
 
 export interface IStorage {
   getProperties(filters?: {
@@ -49,7 +49,7 @@ export interface IStorage {
   setFeaturedMedia(propertyId: string, mediaId: string): Promise<void>;
   syncPropertyImage(propertyId: string): Promise<void>;
   backfillLegacyImages(): Promise<void>;
-  getTeamMembers(activeOnly?: boolean): Promise<TeamMember[]>;
+  getTeamMembers(activeOnly?: boolean, filters?: { search?: string; department?: string }): Promise<TeamMember[]>;
   getTeamMember(id: string): Promise<TeamMember | undefined>;
   createTeamMember(member: InsertTeamMember): Promise<TeamMember>;
   updateTeamMember(id: string, data: Partial<InsertTeamMember>): Promise<TeamMember | undefined>;
@@ -231,10 +231,26 @@ export class DatabaseStorage implements IStorage {
     }
   }
 
-  async getTeamMembers(activeOnly = false): Promise<TeamMember[]> {
+  async getTeamMembers(activeOnly = false, filters?: { search?: string; department?: string }): Promise<TeamMember[]> {
+    const conditions = [];
     if (activeOnly) {
+      conditions.push(eq(teamMembers.isActive, true));
+      conditions.push(eq(teamMembers.showOnWebsite, true));
+    }
+    if (filters?.department) conditions.push(eq(teamMembers.department, filters.department));
+    if (filters?.search) {
+      const term = `%${filters.search}%`;
+      conditions.push(
+        or(
+          ilike(teamMembers.name, term),
+          ilike(teamMembers.role, term),
+          ilike(teamMembers.email, term),
+        )!
+      );
+    }
+    if (conditions.length > 0) {
       return db.select().from(teamMembers)
-        .where(eq(teamMembers.isActive, true))
+        .where(and(...conditions))
         .orderBy(asc(teamMembers.sortOrder));
     }
     return db.select().from(teamMembers).orderBy(asc(teamMembers.sortOrder));

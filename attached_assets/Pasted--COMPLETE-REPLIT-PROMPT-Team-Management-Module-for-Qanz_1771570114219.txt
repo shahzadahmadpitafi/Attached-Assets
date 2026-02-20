@@ -1,0 +1,1000 @@
+# COMPLETE REPLIT PROMPT: Team Management Module for Qanzak Global Properties
+
+Copy and paste this entire prompt into Replit:
+
+---
+
+# CREATE COMPLETE TEAM MANAGEMENT MODULE FOR ADMIN PANEL
+
+Build a comprehensive Team Management system for the Qanzak Global Properties admin dashboard that allows full control over team member profiles, photos, contact information, and website display.
+
+## BUSINESS INFORMATION
+
+**Company:** Qanzak Global Properties
+**Website:** properties.qanzakglobal.com
+**Phone:** +92 331 1479800
+**Email:** info@qanzakglobal.com
+**Address:** House 66, F-11/1, Islamabad, Pakistan
+
+**Current Team Members (Pre-populate these):**
+1. Muhammad Naushad Anjum - CEO & Founder
+2. Shahzad Ahmad - Director of Sales
+3. Adeel - Property Manager
+4. Fatima - Client Relations Manager
+
+---
+
+## PROJECT REQUIREMENTS
+
+### PART 1: DATABASE SETUP
+
+Create a MongoDB/Database collection called `team_members` with this schema:
+
+```javascript
+{
+  _id: ObjectId,
+  
+  // Basic Info
+  firstName: String (required),
+  lastName: String (required),
+  fullName: String (auto-generated),
+  position: String (required),
+  department: String,
+  
+  // Contact
+  email: String (required, unique),
+  phone: String (required),
+  whatsappNumber: String,
+  alternatePhone: String,
+  officeExtension: String,
+  
+  // Profile
+  profilePhoto: String, // URL to image
+  shortBio: String, // Max 150 chars
+  fullBio: String, // Rich text
+  specialization: String,
+  yearsOfExperience: Number,
+  
+  // Professional
+  education: String,
+  certifications: [String],
+  languages: [String],
+  expertise: [String],
+  
+  // Social Media
+  socialMedia: {
+    linkedin: String,
+    facebook: String,
+    instagram: String,
+    twitter: String
+  },
+  
+  // Statistics
+  stats: {
+    propertiesSold: Number,
+    happyClients: Number,
+    dealsCompleted: Number,
+    averageRating: Number
+  },
+  
+  // Display Settings
+  displayOrder: Number,
+  featured: Boolean,
+  showOnWebsite: Boolean,
+  showOnTeamPage: Boolean,
+  showOnContactPage: Boolean,
+  
+  // System
+  isActive: Boolean,
+  createdAt: Date,
+  updatedAt: Date,
+  internalNotes: String
+}
+```
+
+---
+
+### PART 2: CREATE ADMIN PAGES
+
+#### PAGE 1: Team Members List (`/admin/team`)
+
+Create a page showing all team members with:
+
+**Layout:**
+- Header with "Team Management" title and "+ Add New Team Member" button
+- Search bar to filter by name/position/email
+- Filter dropdowns for department and status
+- Cards/list showing each team member with:
+  - Profile photo (circular, 100x100px)
+  - Name and position
+  - Phone and email
+  - Quick action buttons: Edit, View, Delete
+  - Toggle switches for Active/Inactive and Featured
+  - Drag handles for reordering
+
+**Features:**
+- Drag-and-drop to reorder team members (updates displayOrder)
+- Click toggles to change Active/Featured status
+- Search functionality (real-time filter)
+- Responsive grid layout (3 columns on desktop, 1 on mobile)
+
+**HTML Structure Example:**
+```html
+<div class="admin-page">
+  <div class="page-header">
+    <h1>Team Management</h1>
+    <button class="btn-primary" onclick="openAddModal()">
+      + Add New Team Member
+    </button>
+  </div>
+  
+  <div class="filters">
+    <input type="text" id="search" placeholder="Search team members...">
+    <select id="filter-dept">
+      <option value="all">All Departments</option>
+      <option value="executive">Executive</option>
+      <option value="sales">Sales</option>
+      <option value="management">Management</option>
+      <option value="client-relations">Client Relations</option>
+    </select>
+    <select id="filter-status">
+      <option value="all">All Status</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+  </div>
+  
+  <div class="team-grid" id="team-list">
+    <!-- Team member cards load here via JavaScript -->
+  </div>
+</div>
+```
+
+---
+
+#### PAGE 2: Add/Edit Team Member Form
+
+Create a comprehensive form (can be modal or separate page) with these sections:
+
+**SECTION 1: BASIC INFORMATION**
+- First Name (text input, required)
+- Last Name (text input, required)
+- Position/Title (text input, required, placeholder: "e.g., CEO, Director of Sales")
+- Department (dropdown: Executive, Sales, Management, Client Relations, Finance, Legal, Other)
+
+**SECTION 2: PROFILE PHOTO**
+- File upload input (accept: image/jpeg, image/png, image/webp, max 5MB)
+- Preview area showing uploaded photo
+- Upload button
+- Remove photo button
+- Help text: "Recommended: 800x800px, square format, Max 5MB"
+
+**Photo Upload Functionality:**
+```javascript
+function handlePhotoUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  // Validate file size
+  if (file.size > 5 * 1024 * 1024) {
+    alert('File too large. Max 5MB.');
+    return;
+  }
+  
+  // Validate file type
+  if (!file.type.match(/image\/(jpeg|png|webp)/)) {
+    alert('Only JPG, PNG, and WebP images allowed.');
+    return;
+  }
+  
+  // Preview image
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    document.getElementById('photo-preview').src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+```
+
+**SECTION 3: CONTACT INFORMATION**
+- Email Address (email input, required, placeholder: "name@qanzakglobal.com")
+- Phone Number (tel input, required, placeholder: "+92 331 1479800")
+- WhatsApp Number (tel input, with checkbox "Same as phone")
+- Alternate Phone (tel input)
+- Office Extension (text input)
+
+**SECTION 4: BIOGRAPHY & DESCRIPTION**
+- Short Bio (textarea, maxlength 150, with character counter)
+- Full Biography (rich text editor using Quill or TinyMCE)
+- Specialization (text input, placeholder: "e.g., Property Sales, Investment")
+- Years of Experience (number input, min 0, max 50)
+
+**SECTION 5: PROFESSIONAL DETAILS**
+- Education (text input, placeholder: "e.g., MBA from LUMS")
+- Certifications (multiple text inputs with "+ Add Another" button)
+- Languages Spoken (checkboxes: English, Urdu, Punjabi, Pashto, Arabic, Other)
+- Areas of Expertise (checkboxes: Residential Sales, Commercial Properties, Property Management, Investment Consultation, Legal Documentation, Property Valuation)
+
+**SECTION 6: SOCIAL MEDIA LINKS**
+- LinkedIn (url input, placeholder: "https://linkedin.com/in/username")
+- Facebook (url input, placeholder: "https://facebook.com/username")
+- Instagram (text input, placeholder: "@username")
+- Twitter/X (text input, placeholder: "@username")
+
+**SECTION 7: STATISTICS (Optional)**
+- Properties Sold (number input)
+- Happy Clients (number input)
+- Deals Completed (number input)
+- Average Rating (number input, min 0, max 5, step 0.1)
+
+**SECTION 8: DISPLAY SETTINGS**
+- Display Order (number input, help text: "1 = first, 2 = second, etc.")
+- Visibility checkboxes:
+  - Show on website
+  - Show on Team page
+  - Show on Contact page
+  - Featured (appears on homepage)
+- Status radio buttons: Active / Inactive
+
+**SECTION 9: INTERNAL NOTES**
+- Internal Notes (textarea, help text: "Admin-only notes, not visible on website")
+
+**FORM ACTIONS:**
+- Cancel button
+- Save as Draft button
+- Publish/Update button (primary action)
+
+---
+
+### PART 3: API ENDPOINTS
+
+Create these backend API routes:
+
+**1. GET /api/team**
+- Return all team members
+- Sort by displayOrder
+- Optional query params: ?department=sales&status=active
+
+**2. GET /api/team/:id**
+- Return single team member by ID
+
+**3. POST /api/team**
+- Create new team member
+- Handle multipart/form-data for photo upload
+- Auto-generate fullName from firstName + lastName
+- Validate required fields
+- Upload photo to storage (Cloudinary or local /uploads/team/)
+- Return created team member
+
+**4. PUT /api/team/:id**
+- Update existing team member
+- Handle photo upload if new photo provided
+- Update updatedAt timestamp
+- Return updated team member
+
+**5. DELETE /api/team/:id**
+- Delete team member
+- Also delete associated photo file
+- Return success message
+
+**6. PATCH /api/team/:id/status**
+- Quick toggle isActive status
+- Body: { isActive: true/false }
+
+**7. PATCH /api/team/:id/featured**
+- Quick toggle featured status
+- Body: { featured: true/false }
+
+**8. PUT /api/team/reorder**
+- Update display order for multiple members
+- Body: [{ id: "...", displayOrder: 1 }, { id: "...", displayOrder: 2 }]
+
+---
+
+### PART 4: FRONTEND JAVASCRIPT
+
+**Load Team Members:**
+```javascript
+async function loadTeamMembers() {
+  try {
+    const response = await fetch('/api/team');
+    const members = await response.json();
+    
+    const listContainer = document.getElementById('team-list');
+    listContainer.innerHTML = members.map(member => `
+      <div class="team-card" data-id="${member._id}">
+        <div class="team-photo">
+          <img src="${member.profilePhoto || '/default-avatar.png'}" 
+               alt="${member.fullName}">
+        </div>
+        <div class="team-info">
+          <h3>${member.fullName}</h3>
+          <p class="position">${member.position}</p>
+          <p class="contact">📞 ${member.phone}</p>
+          <p class="contact">📧 ${member.email}</p>
+        </div>
+        <div class="team-actions">
+          <button onclick="editMember('${member._id}')" class="btn-edit">
+            Edit
+          </button>
+          <button onclick="viewMember('${member._id}')" class="btn-view">
+            View
+          </button>
+          <button onclick="deleteMember('${member._id}')" class="btn-delete">
+            Delete
+          </button>
+        </div>
+        <div class="team-toggles">
+          <label class="toggle">
+            <input type="checkbox" ${member.isActive ? 'checked' : ''} 
+                   onchange="toggleStatus('${member._id}', this.checked)">
+            <span>Active</span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" ${member.featured ? 'checked' : ''} 
+                   onchange="toggleFeatured('${member._id}', this.checked)">
+            <span>Featured</span>
+          </label>
+        </div>
+      </div>
+    `).join('');
+  } catch (error) {
+    console.error('Error loading team:', error);
+    alert('Failed to load team members');
+  }
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', loadTeamMembers);
+```
+
+**Add/Update Team Member:**
+```javascript
+async function submitTeamForm(event) {
+  event.preventDefault();
+  
+  const formData = new FormData(event.target);
+  const isEdit = formData.get('_id'); // Check if editing
+  
+  const url = isEdit ? `/api/team/${formData.get('_id')}` : '/api/team';
+  const method = isEdit ? 'PUT' : 'POST';
+  
+  try {
+    const response = await fetch(url, {
+      method: method,
+      body: formData
+    });
+    
+    if (response.ok) {
+      alert(isEdit ? 'Team member updated!' : 'Team member added!');
+      closeModal();
+      loadTeamMembers(); // Refresh list
+    } else {
+      const error = await response.json();
+      alert('Error: ' + error.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to save team member');
+  }
+}
+```
+
+**Delete Team Member:**
+```javascript
+async function deleteMember(id) {
+  if (!confirm('Are you sure you want to delete this team member?')) {
+    return;
+  }
+  
+  try {
+    const response = await fetch(`/api/team/${id}`, {
+      method: 'DELETE'
+    });
+    
+    if (response.ok) {
+      alert('Team member deleted successfully');
+      loadTeamMembers(); // Refresh list
+    } else {
+      alert('Failed to delete team member');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to delete team member');
+  }
+}
+```
+
+**Toggle Status:**
+```javascript
+async function toggleStatus(id, isActive) {
+  try {
+    const response = await fetch(`/api/team/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ isActive })
+    });
+    
+    if (response.ok) {
+      console.log('Status updated');
+    } else {
+      alert('Failed to update status');
+      loadTeamMembers(); // Revert on error
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Failed to update status');
+  }
+}
+```
+
+---
+
+### PART 5: WEBSITE INTEGRATION
+
+On the public-facing website, automatically fetch and display team members:
+
+**Homepage - Featured Members:**
+```javascript
+async function loadFeaturedTeam() {
+  const response = await fetch('/api/team?featured=true&active=true');
+  const featured = await response.json();
+  
+  const container = document.getElementById('homepage-team');
+  container.innerHTML = featured.slice(0, 4).map(member => `
+    <div class="team-member-card">
+      <img src="${member.profilePhoto}" alt="${member.fullName}">
+      <h3>${member.fullName}</h3>
+      <p>${member.position}</p>
+      <p>${member.shortBio}</p>
+      <a href="tel:${member.phone}">Call</a>
+      <a href="mailto:${member.email}">Email</a>
+    </div>
+  `).join('');
+}
+```
+
+**Team Page - All Members:**
+```javascript
+async function loadAllTeam() {
+  const response = await fetch('/api/team?showOnTeamPage=true&active=true');
+  const members = await response.json();
+  
+  const container = document.getElementById('team-page-grid');
+  container.innerHTML = members.map(member => `
+    <div class="team-member-full">
+      <img src="${member.profilePhoto}" alt="${member.fullName}">
+      <h2>${member.fullName}</h2>
+      <h3>${member.position}</h3>
+      <p>${member.fullBio || member.shortBio}</p>
+      
+      ${member.stats ? `
+        <div class="stats">
+          <div>${member.stats.propertiesSold || 0} Properties Sold</div>
+          <div>${member.stats.happyClients || 0} Happy Clients</div>
+        </div>
+      ` : ''}
+      
+      <div class="contact">
+        <p>📞 ${member.phone}</p>
+        <p>📧 ${member.email}</p>
+      </div>
+      
+      ${member.socialMedia ? `
+        <div class="social-links">
+          ${member.socialMedia.linkedin ? `<a href="${member.socialMedia.linkedin}">LinkedIn</a>` : ''}
+          ${member.socialMedia.facebook ? `<a href="${member.socialMedia.facebook}">Facebook</a>` : ''}
+          ${member.socialMedia.instagram ? `<a href="https://instagram.com/${member.socialMedia.instagram}">Instagram</a>` : ''}
+        </div>
+      ` : ''}
+    </div>
+  `).join('');
+}
+```
+
+**Contact Page - Contact Cards:**
+```javascript
+async function loadContactTeam() {
+  const response = await fetch('/api/team?showOnContactPage=true&active=true');
+  const members = await response.json();
+  
+  const container = document.getElementById('contact-team');
+  container.innerHTML = members.map(member => `
+    <div class="contact-card">
+      <h4>${member.position}</h4>
+      <p><strong>${member.fullName}</strong></p>
+      <p>${member.specialization}</p>
+      <a href="tel:${member.phone}" class="btn">Call Now</a>
+      <a href="https://wa.me/${member.whatsappNumber.replace(/[^0-9]/g, '')}" class="btn">WhatsApp</a>
+      <a href="mailto:${member.email}" class="btn">Email</a>
+    </div>
+  `).join('');
+}
+```
+
+---
+
+### PART 6: PHOTO UPLOAD SYSTEM
+
+Use one of these approaches:
+
+**OPTION A: Local Storage (Simple)**
+```javascript
+const multer = require('multer');
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: './uploads/team/',
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + Math.random().toString(36).substring(7);
+    cb(null, uniqueName + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only images allowed'));
+    }
+  }
+});
+
+// In route
+router.post('/team', upload.single('profilePhoto'), async (req, res) => {
+  const photoUrl = req.file ? `/uploads/team/${req.file.filename}` : null;
+  // Save to database...
+});
+```
+
+**OPTION B: Cloudinary (Recommended for Production)**
+```javascript
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+async function uploadPhoto(file) {
+  const result = await cloudinary.uploader.upload(file.path, {
+    folder: 'qanzak/team',
+    transformation: [
+      { width: 800, height: 800, crop: 'fill', gravity: 'face' },
+      { quality: 'auto' },
+      { fetch_format: 'auto' }
+    ]
+  });
+  return result.secure_url;
+}
+```
+
+---
+
+### PART 7: STYLING
+
+Create professional CSS for the team management interface:
+
+**Admin Panel Styles:**
+```css
+/* Team List */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 20px;
+}
+
+.team-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.team-photo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 16px;
+}
+
+.team-info h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.team-info .position {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.team-info .contact {
+  font-size: 13px;
+  color: #4b5563;
+  margin: 4px 0;
+}
+
+.team-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.team-actions button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-edit {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #2563eb;
+}
+
+.btn-view {
+  background: #10b981;
+  color: white;
+}
+
+.btn-view:hover {
+  background: #059669;
+}
+
+.btn-delete {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+}
+
+.team-toggles {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Form Styles */
+.form-section {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group input[type="url"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.help-text {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.char-count {
+  font-size: 12px;
+  color: #9ca3af;
+  float: right;
+}
+
+/* Photo Upload */
+.photo-upload {
+  text-align: center;
+}
+
+.photo-preview {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #e5e7eb;
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  padding: 24px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  position: sticky;
+  bottom: 0;
+}
+
+.btn-primary {
+  background: #1e40af;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: #1e3a8a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+}
+
+.btn-secondary {
+  background: #6b7280;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline {
+  background: white;
+  color: #1e40af;
+  border: 2px solid #1e40af;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+```
+
+---
+
+### PART 8: PRE-POPULATE DATA
+
+Create a seed script or run this on first setup:
+
+```javascript
+const seedTeamMembers = [
+  {
+    firstName: 'Muhammad Naushad',
+    lastName: 'Anjum',
+    fullName: 'Muhammad Naushad Anjum',
+    position: 'CEO & Founder',
+    department: 'executive',
+    email: 'naushad@qanzakglobal.com',
+    phone: '+92 331 1479800',
+    whatsappNumber: '+92 331 1479800',
+    shortBio: 'Visionary leader with 15+ years of experience in real estate',
+    fullBio: 'Muhammad Naushad Anjum is the founder and CEO of Qanzak Global Properties...',
+    specialization: 'Strategic Planning, Business Development, Real Estate Investment',
+    yearsOfExperience: 15,
+    expertise: ['Residential Sales', 'Commercial Properties', 'Investment Consultation'],
+    languages: ['English', 'Urdu'],
+    displayOrder: 1,
+    featured: true,
+    showOnWebsite: true,
+    showOnTeamPage: true,
+    showOnContactPage: true,
+    isActive: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    firstName: 'Shahzad',
+    lastName: 'Ahmad',
+    fullName: 'Shahzad Ahmad',
+    position: 'Director of Sales',
+    department: 'sales',
+    email: 'shahzad@qanzakglobal.com',
+    phone: '+92 331 1479800',
+    whatsappNumber: '+92 331 1479800',
+    shortBio: 'Expert in property sales and client acquisition',
+    fullBio: 'Shahzad Ahmad leads our sales team with extensive market knowledge...',
+    specialization: 'Property Sales, Market Analysis, Client Relations',
+    yearsOfExperience: 10,
+    expertise: ['Residential Sales', 'Commercial Properties'],
+    languages: ['English', 'Urdu'],
+    displayOrder: 2,
+    featured: true,
+    showOnWebsite: true,
+    showOnTeamPage: true,
+    showOnContactPage: true,
+    isActive: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    firstName: 'Adeel',
+    lastName: '',
+    fullName: 'Adeel',
+    position: 'Property Manager',
+    department: 'management',
+    email: 'adeel@qanzakglobal.com',
+    phone: '+92 331 1479800',
+    whatsappNumber: '+92 331 1479800',
+    shortBio: 'Professional property maintenance and facility management',
+    fullBio: 'Adeel oversees all property maintenance and management operations...',
+    specialization: 'Property Maintenance, Facility Management, Tenant Relations',
+    yearsOfExperience: 8,
+    expertise: ['Property Management'],
+    languages: ['English', 'Urdu'],
+    displayOrder: 3,
+    featured: true,
+    showOnWebsite: true,
+    showOnTeamPage: true,
+    showOnContactPage: true,
+    isActive: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    firstName: 'Fatima',
+    lastName: '',
+    fullName: 'Fatima',
+    position: 'Client Relations Manager',
+    department: 'client-relations',
+    email: 'fatima@qanzakglobal.com',
+    phone: '+92 331 1479800',
+    whatsappNumber: '+92 331 1479800',
+    shortBio: 'Dedicated to providing exceptional customer service',
+    fullBio: 'Fatima manages all client relations ensuring customer satisfaction...',
+    specialization: 'Customer Service, Client Communication, Support',
+    yearsOfExperience: 6,
+    expertise: ['Property Management'],
+    languages: ['English', 'Urdu'],
+    displayOrder: 4,
+    featured: true,
+    showOnWebsite: true,
+    showOnTeamPage: true,
+    showOnContactPage: true,
+    isActive: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+];
+
+// Insert into database
+await TeamMember.insertMany(seedTeamMembers);
+```
+
+---
+
+## SUMMARY OF DELIVERABLES
+
+Create these files/features:
+
+✅ `/admin/team` - Team members list page
+✅ `/admin/team/add` - Add new team member form
+✅ `/admin/team/edit/:id` - Edit team member form
+✅ API routes for CRUD operations
+✅ Photo upload system (local or Cloudinary)
+✅ Frontend JavaScript for interactivity
+✅ CSS styling for professional UI
+✅ Database schema/models
+✅ Website integration (fetch and display team)
+✅ Pre-populated with 4 existing team members
+
+## TECHNICAL REQUIREMENTS
+
+- Use MongoDB or your existing database
+- Use multer for file uploads
+- Use express.js for backend
+- Responsive design (mobile-friendly)
+- Form validation (client and server side)
+- Error handling with user-friendly messages
+- Loading states for async operations
+- Success/error toast notifications
+- Confirmation dialogs for destructive actions
+
+## TESTING CHECKLIST
+
+Before marking as complete, test:
+- [ ] Can add new team member
+- [ ] Can upload and preview photo
+- [ ] Can edit existing team member
+- [ ] Can change photo
+- [ ] Can delete team member (with confirmation)
+- [ ] Can toggle active/featured status
+- [ ] Search and filters work
+- [ ] Team members appear on website
+- [ ] All form validations work
+- [ ] Mobile responsive
+- [ ] No console errors
+
+---
+
+BUILD THIS AS A COMPLETE, PRODUCTION-READY TEAM MANAGEMENT SYSTEM!

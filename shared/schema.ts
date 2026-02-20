@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, boolean, timestamp, decimal } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, boolean, timestamp, decimal, numeric } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -75,6 +75,26 @@ export const teamMembers = pgTable("team_members", {
   photo: text("photo"),
   sortOrder: integer("sort_order").default(0),
   isActive: boolean("is_active").default(true),
+  education: text("education"),
+  certifications: text("certifications").array().default(sql`'{}'`),
+  languages: text("languages").array().default(sql`'{}'`),
+  expertise: text("expertise").array().default(sql`'{}'`),
+  socialLinkedin: text("social_linkedin"),
+  socialFacebook: text("social_facebook"),
+  socialInstagram: text("social_instagram"),
+  socialTwitter: text("social_twitter"),
+  statsPropertiesSold: integer("stats_properties_sold").default(0),
+  statsHappyClients: integer("stats_happy_clients").default(0),
+  statsDealsCompleted: integer("stats_deals_completed").default(0),
+  statsAvgRating: numeric("stats_avg_rating", { precision: 2, scale: 1 }).default("0"),
+  featured: boolean("featured").default(false),
+  showOnWebsite: boolean("show_on_website").default(true),
+  showOnTeamPage: boolean("show_on_team_page").default(true),
+  showOnContactPage: boolean("show_on_contact_page").default(false),
+  yearsOfExperience: integer("years_of_experience").default(0),
+  internalNotes: text("internal_notes"),
+  alternatePhone: text("alternate_phone"),
+  officeExtension: text("office_extension"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

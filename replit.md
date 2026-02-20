@@ -39,7 +39,7 @@ Professional real estate website for Qanzak Global Properties, a property sales,
 - `property_media` - id, propertyId, type (image/video/floorplan), url, thumbnailUrl, caption, tags, roomType, isFeatured, sortOrder, platform, videoId, fileSize, createdAt
 - `inquiries` - id, name, email, phone, service, message, status, notes, propertyId, createdAt
 - `admin_users` - id, email, passwordHash, name, role, createdAt, lastLogin
-- `team_members` - id, name, role, department, specialization, bio, shortBio, email, phone, whatsapp, photo, sortOrder, isActive, createdAt
+- `team_members` - id, name, role, department, specialization, bio, shortBio, email, phone, whatsapp, photo, sortOrder, isActive, education, certifications[], languages[], expertise[], socialLinkedin, socialFacebook, socialInstagram, socialTwitter, statsPropertiesSold, statsHappyClients, statsDealsCompleted, statsAvgRating, featured, showOnWebsite, showOnTeamPage, showOnContactPage, yearsOfExperience, internalNotes, alternatePhone, officeExtension, createdAt
 
 ## Multi-Media Gallery System
 - **Upload flow**: Admin uploads via drag-and-drop -> presigned URL from object storage -> PUT file directly -> POST metadata to API
@@ -57,13 +57,13 @@ Professional real estate website for Qanzak Global Properties, a property sales,
 - Property CRUD: list with search, add/edit form with validation, delete with confirmation
 - Media management: upload zone, gallery manager, video embed form, floor plan upload
 - Inquiry management: list with status filters, status updates (new/contacted/resolved), notes, delete
-- Team management: add/edit/delete members, photo upload, reorder, active/inactive toggle
+- Team management: comprehensive 8-section form (photo, basic info, contact, bio, professional details, social media, statistics, display settings, internal notes), search/filter bar, featured/active quick toggles, expanded card display with expertise badges
 - Sidebar navigation: Dashboard, Properties, Add Property, Inquiries, Team Members
 - Protected routes redirect to /admin/login when not authenticated
 - Admin API endpoints all under /api/admin/* with session middleware
 
 ## Recent Changes
-- 2026-02-20: Added dynamic team member management: database table, admin CRUD page with photo upload, about page now uses API data
+- 2026-02-20: Enhanced team management with 20+ new fields (education, certifications, languages, expertise arrays, social media links, performance stats, visibility controls), rebuilt admin team page with multi-section form, search/filter, quick toggles; updated About page with expertise badges, social links, years of experience
 - 2026-02-16: Added multi-media gallery system with object storage uploads, admin media management, public gallery with lightbox, video embeds, floor plans
 - 2026-02-16: Added admin dashboard with login, property CRUD, inquiry management, and dashboard metrics
 - 2026-02-16: Initial build with 10 seeded properties, 5 pages, full API
