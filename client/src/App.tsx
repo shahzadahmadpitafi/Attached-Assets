@@ -13,6 +13,7 @@ import PropertiesPage from "@/pages/properties";
 import AboutPage from "@/pages/about";
 import ContactPage from "@/pages/contact";
 import NotFound from "@/pages/not-found";
+import MarketingGenerator from "@/pages/marketing-generator";
 import { AdminAuthProvider, useAdminAuth } from "@/lib/admin-auth";
 import AdminLoginPage from "@/pages/admin/login";
 import AdminDashboard from "@/pages/admin/dashboard";
@@ -99,7 +100,7 @@ function AppRouter() {
   return (
     <>
       <ScrollToTop />
-      {location.startsWith("/admin") ? <AdminRoutes /> : <PublicLayout />}
+      {location.startsWith("/admin") ? <AdminRoutes /> : location === "/marketing-generator" ? <MarketingGenerator /> : <PublicLayout />}
     </>
   );
 }
