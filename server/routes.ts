@@ -1,7 +1,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertInquirySchema, insertPropertySchema, updatePropertySchema, updateInquirySchema, loginSchema, insertMediaSchema, updateMediaSchema } from "@shared/schema";
+import { insertInquirySchema, insertPropertySchema, updatePropertySchema, updateInquirySchema, loginSchema, insertMediaSchema, updateMediaSchema, insertTeamMemberSchema, updateTeamMemberSchema } from "@shared/schema";
 import bcrypt from "bcryptjs";
 
 function requireAdmin(req: Request, res: Response, next: NextFunction) {
@@ -314,6 +314,75 @@ export async function registerRoutes(
       res.json({ message: "Inquiry deleted" });
     } catch (error) {
       res.status(500).json({ message: "Failed to delete inquiry" });
+    }
+  });
+
+  // ── Public Team Members ──
+
+  app.get("/api/team", async (_req, res) => {
+    try {
+      const members = await storage.getTeamMembers(true);
+      res.json(members);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch team members" });
+    }
+  });
+
+  // ── Admin Team Members CRUD ──
+
+  app.get("/api/admin/team", requireAdmin, async (_req, res) => {
+    try {
+      const members = await storage.getTeamMembers(false);
+      res.json(members);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch team members" });
+    }
+  });
+
+  app.get("/api/admin/team/:id", requireAdmin, async (req, res) => {
+    try {
+      const member = await storage.getTeamMember(req.params.id);
+      if (!member) return res.status(404).json({ message: "Team member not found" });
+      res.json(member);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch team member" });
+    }
+  });
+
+  app.post("/api/admin/team", requireAdmin, async (req, res) => {
+    try {
+      const parsed = insertTeamMemberSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parsed.error.flatten() });
+      }
+      const member = await storage.createTeamMember(parsed.data);
+      res.status(201).json(member);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create team member" });
+    }
+  });
+
+  app.patch("/api/admin/team/:id", requireAdmin, async (req, res) => {
+    try {
+      const parsed = updateTeamMemberSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid data", errors: parsed.error.flatten() });
+      }
+      const member = await storage.updateTeamMember(req.params.id, parsed.data);
+      if (!member) return res.status(404).json({ message: "Team member not found" });
+      res.json(member);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update team member" });
+    }
+  });
+
+  app.delete("/api/admin/team/:id", requireAdmin, async (req, res) => {
+    try {
+      const deleted = await storage.deleteTeamMember(req.params.id);
+      if (!deleted) return res.status(404).json({ message: "Team member not found" });
+      res.json({ message: "Team member deleted" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete team member" });
     }
   });
 

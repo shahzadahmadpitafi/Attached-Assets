@@ -3,7 +3,8 @@ import {
   type Inquiry, type InsertInquiry,
   type AdminUser,
   type PropertyMedia, type InsertMedia,
-  properties, inquiries, adminUsers, propertyMedia,
+  type TeamMember, type InsertTeamMember,
+  properties, inquiries, adminUsers, propertyMedia, teamMembers,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, gte, lte, and, desc, asc, count, sql } from "drizzle-orm";
@@ -48,6 +49,11 @@ export interface IStorage {
   setFeaturedMedia(propertyId: string, mediaId: string): Promise<void>;
   syncPropertyImage(propertyId: string): Promise<void>;
   backfillLegacyImages(): Promise<void>;
+  getTeamMembers(activeOnly?: boolean): Promise<TeamMember[]>;
+  getTeamMember(id: string): Promise<TeamMember | undefined>;
+  createTeamMember(member: InsertTeamMember): Promise<TeamMember>;
+  updateTeamMember(id: string, data: Partial<InsertTeamMember>): Promise<TeamMember | undefined>;
+  deleteTeamMember(id: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -223,6 +229,35 @@ export class DatabaseStorage implements IStorage {
         });
       }
     }
+  }
+
+  async getTeamMembers(activeOnly = false): Promise<TeamMember[]> {
+    if (activeOnly) {
+      return db.select().from(teamMembers)
+        .where(eq(teamMembers.isActive, true))
+        .orderBy(asc(teamMembers.sortOrder));
+    }
+    return db.select().from(teamMembers).orderBy(asc(teamMembers.sortOrder));
+  }
+
+  async getTeamMember(id: string): Promise<TeamMember | undefined> {
+    const [member] = await db.select().from(teamMembers).where(eq(teamMembers.id, id));
+    return member;
+  }
+
+  async createTeamMember(member: InsertTeamMember): Promise<TeamMember> {
+    const [created] = await db.insert(teamMembers).values(member).returning();
+    return created;
+  }
+
+  async updateTeamMember(id: string, data: Partial<InsertTeamMember>): Promise<TeamMember | undefined> {
+    const [updated] = await db.update(teamMembers).set(data).where(eq(teamMembers.id, id)).returning();
+    return updated;
+  }
+
+  async deleteTeamMember(id: string): Promise<boolean> {
+    const result = await db.delete(teamMembers).where(eq(teamMembers.id, id)).returning();
+    return result.length > 0;
   }
 }
 

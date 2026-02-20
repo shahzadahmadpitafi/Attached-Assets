@@ -15,13 +15,14 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, Building2, PlusCircle, MessageSquare, LogOut } from "lucide-react";
+import { LayoutDashboard, Building2, PlusCircle, MessageSquare, Users, LogOut } from "lucide-react";
 
 const navItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard },
   { title: "Properties", url: "/admin/properties", icon: Building2 },
   { title: "Add Property", url: "/admin/properties/new", icon: PlusCircle },
   { title: "Inquiries", url: "/admin/inquiries", icon: MessageSquare },
+  { title: "Team Members", url: "/admin/team", icon: Users },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

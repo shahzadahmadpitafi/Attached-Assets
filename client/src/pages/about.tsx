@@ -1,9 +1,11 @@
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { COMPANY, TEAM } from "@/lib/constants";
-import { ArrowRight, Target, Shield, Heart, Award, Phone, Mail } from "lucide-react";
+import { COMPANY } from "@/lib/constants";
+import type { TeamMember } from "@shared/schema";
+import { ArrowRight, Target, Shield, Heart, Award, Phone, Mail, Loader2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 const values = [
@@ -14,8 +16,12 @@ const values = [
 ];
 
 export default function AboutPage() {
-  const ceo = TEAM[0];
-  const rest = TEAM.slice(1);
+  const { data: teamMembers = [], isLoading } = useQuery<TeamMember[]>({
+    queryKey: ["/api/team"],
+  });
+
+  const ceo = teamMembers[0];
+  const rest = teamMembers.slice(1);
 
   return (
     <div className="min-h-screen pt-20">
@@ -94,76 +100,96 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <Card className="p-6 sm:p-8 mb-10" data-testid={`card-team-${ceo.name.toLowerCase().replace(/\s/g, "-")}`}>
-            <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-              <Avatar className="w-32 h-32 flex-shrink-0">
-                <AvatarImage src={ceo.photo} alt={ceo.name} />
-                <AvatarFallback className="bg-primary/10 text-primary text-3xl font-semibold">
-                  {ceo.name.split(" ").map((n) => n[0]).join("")}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex-1 text-center sm:text-left">
-                <h3 className="font-serif text-2xl font-bold" data-testid="text-ceo-name">{ceo.name}</h3>
-                <p className="text-[hsl(45,93%,47%)] font-semibold">{ceo.role}</p>
-                <p className="text-sm text-muted-foreground mt-1">{ceo.department}</p>
-                <p className="text-muted-foreground mt-3 leading-relaxed">{ceo.bio}</p>
-                <p className="text-sm text-muted-foreground mt-2 italic">{ceo.specialization}</p>
-                <div className="flex flex-wrap items-center gap-2 mt-4 justify-center sm:justify-start">
-                  <a href={`tel:${ceo.phone}`}>
-                    <Button variant="outline" size="sm" className="gap-1.5" data-testid="button-ceo-call">
-                      <Phone className="w-3.5 h-3.5" /> Call
-                    </Button>
-                  </a>
-                  <a href={`https://wa.me/${ceo.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                    <Button size="sm" className="gap-1.5 bg-[#25D366] text-white" data-testid="button-ceo-whatsapp">
-                      <SiWhatsapp className="w-3.5 h-3.5" /> WhatsApp
-                    </Button>
-                  </a>
-                  <a href={`mailto:${ceo.email}`}>
-                    <Button variant="outline" size="sm" className="gap-1.5" data-testid="button-ceo-email">
-                      <Mail className="w-3.5 h-3.5" /> Email
-                    </Button>
-                  </a>
-                </div>
-              </div>
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
-          </Card>
+          ) : teamMembers.length === 0 ? (
+            <p className="text-center text-muted-foreground">Team information coming soon.</p>
+          ) : (
+            <>
+              {ceo && (
+                <Card className="p-6 sm:p-8 mb-10" data-testid={`card-team-${ceo.name.toLowerCase().replace(/\s/g, "-")}`}>
+                  <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+                    <Avatar className="w-32 h-32 flex-shrink-0">
+                      <AvatarImage src={ceo.photo ?? undefined} alt={ceo.name} />
+                      <AvatarFallback className="bg-primary/10 text-primary text-3xl font-semibold">
+                        {ceo.name.split(" ").map((n) => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 text-center sm:text-left">
+                      <h3 className="font-serif text-2xl font-bold" data-testid="text-ceo-name">{ceo.name}</h3>
+                      <p className="text-[hsl(45,93%,47%)] font-semibold">{ceo.role}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{ceo.department}</p>
+                      <p className="text-muted-foreground mt-3 leading-relaxed">{ceo.bio}</p>
+                      <p className="text-sm text-muted-foreground mt-2 italic">{ceo.specialization}</p>
+                      <div className="flex flex-wrap items-center gap-2 mt-4 justify-center sm:justify-start">
+                        {ceo.phone && (
+                          <a href={`tel:${ceo.phone}`}>
+                            <Button variant="outline" size="sm" className="gap-1.5" data-testid="button-ceo-call">
+                              <Phone className="w-3.5 h-3.5" /> Call
+                            </Button>
+                          </a>
+                        )}
+                        {ceo.whatsapp && (
+                          <a href={`https://wa.me/${ceo.whatsapp}`} target="_blank" rel="noopener noreferrer">
+                            <Button size="sm" className="gap-1.5 bg-[#25D366] text-white" data-testid="button-ceo-whatsapp">
+                              <SiWhatsapp className="w-3.5 h-3.5" /> WhatsApp
+                            </Button>
+                          </a>
+                        )}
+                        <a href={`mailto:${ceo.email}`}>
+                          <Button variant="outline" size="sm" className="gap-1.5" data-testid="button-ceo-email">
+                            <Mail className="w-3.5 h-3.5" /> Email
+                          </Button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {rest.map((m) => (
-              <Card key={m.name} className="p-6" data-testid={`card-team-${m.name.toLowerCase().replace(/\s/g, "-")}`}>
-                <div className="text-center">
-                  <Avatar className="w-24 h-24 mx-auto mb-4">
-                    <AvatarImage src={m.photo} alt={m.name} />
-                    <AvatarFallback className="bg-primary/10 text-primary text-xl font-semibold">
-                      {m.name.split(" ").map((n) => n[0]).join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h3 className="font-semibold text-lg">{m.name}</h3>
-                  <p className="text-sm text-[hsl(45,93%,47%)] font-medium">{m.role}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{m.department}</p>
-                </div>
-                <p className="text-sm text-muted-foreground mt-3 leading-relaxed text-center">{m.bio}</p>
-                <div className="flex items-center justify-center gap-2 mt-4">
-                  <a href={`tel:${m.phone}`}>
-                    <Button variant="outline" size="sm" className="gap-1.5">
-                      <Phone className="w-3.5 h-3.5" /> Call
-                    </Button>
-                  </a>
-                  <a href={`https://wa.me/${m.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                    <Button size="sm" className="gap-1.5 bg-[#25D366] text-white">
-                      <SiWhatsapp className="w-3.5 h-3.5" /> WhatsApp
-                    </Button>
-                  </a>
-                  <a href={`mailto:${m.email}`}>
-                    <Button variant="outline" size="sm" className="gap-1.5">
-                      <Mail className="w-3.5 h-3.5" /> Email
-                    </Button>
-                  </a>
-                </div>
-              </Card>
-            ))}
-          </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {rest.map((m) => (
+                  <Card key={m.id} className="p-6" data-testid={`card-team-${m.name.toLowerCase().replace(/\s/g, "-")}`}>
+                    <div className="text-center">
+                      <Avatar className="w-24 h-24 mx-auto mb-4">
+                        <AvatarImage src={m.photo ?? undefined} alt={m.name} />
+                        <AvatarFallback className="bg-primary/10 text-primary text-xl font-semibold">
+                          {m.name.split(" ").map((n) => n[0]).join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <h3 className="font-semibold text-lg">{m.name}</h3>
+                      <p className="text-sm text-[hsl(45,93%,47%)] font-medium">{m.role}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{m.department}</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-3 leading-relaxed text-center">{m.bio}</p>
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      {m.phone && (
+                        <a href={`tel:${m.phone}`}>
+                          <Button variant="outline" size="sm" className="gap-1.5">
+                            <Phone className="w-3.5 h-3.5" /> Call
+                          </Button>
+                        </a>
+                      )}
+                      {m.whatsapp && (
+                        <a href={`https://wa.me/${m.whatsapp}`} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" className="gap-1.5 bg-[#25D366] text-white">
+                            <SiWhatsapp className="w-3.5 h-3.5" /> WhatsApp
+                          </Button>
+                        </a>
+                      )}
+                      <a href={`mailto:${m.email}`}>
+                        <Button variant="outline" size="sm" className="gap-1.5">
+                          <Mail className="w-3.5 h-3.5" /> Email
+                        </Button>
+                      </a>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
 

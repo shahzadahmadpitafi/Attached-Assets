@@ -61,6 +61,23 @@ export const adminUsers = pgTable("admin_users", {
   lastLogin: timestamp("last_login"),
 });
 
+export const teamMembers = pgTable("team_members", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
+  department: text("department"),
+  specialization: text("specialization"),
+  bio: text("bio"),
+  shortBio: text("short_bio"),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  whatsapp: text("whatsapp"),
+  photo: text("photo"),
+  sortOrder: integer("sort_order").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertPropertySchema = createInsertSchema(properties).omit({ id: true, createdAt: true });
 export const insertInquirySchema = createInsertSchema(inquiries).omit({ id: true, createdAt: true, status: true, notes: true, propertyId: true });
 export const insertAdminUserSchema = createInsertSchema(adminUsers).omit({ id: true, createdAt: true, lastLogin: true, passwordHash: true }).extend({
@@ -80,6 +97,9 @@ export const updateMediaSchema = z.object({
   sortOrder: z.number().optional(),
 });
 
+export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({ id: true, createdAt: true });
+export const updateTeamMemberSchema = insertTeamMemberSchema.partial();
+
 export const updatePropertySchema = insertPropertySchema.partial();
 export const updateInquirySchema = z.object({
   status: z.enum(["new", "in_progress", "responded", "closed"]).optional(),
@@ -95,3 +115,5 @@ export type InsertAdminUser = z.infer<typeof insertAdminUserSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type PropertyMedia = typeof propertyMedia.$inferSelect;
 export type InsertMedia = z.infer<typeof insertMediaSchema>;
+export type TeamMember = typeof teamMembers.$inferSelect;
+export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;

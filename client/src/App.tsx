@@ -21,6 +21,7 @@ import AdminLayout from "@/pages/admin/layout";
 import AdminPropertiesList from "@/pages/admin/properties-list";
 import AdminPropertyForm from "@/pages/admin/property-form";
 import AdminInquiries from "@/pages/admin/inquiries";
+import AdminTeamPage from "@/pages/admin/team";
 import { Loader2 } from "lucide-react";
 import { Redirect } from "wouter";
 
@@ -58,6 +59,9 @@ function AdminRoutes() {
         </Route>
         <Route path="/admin/inquiries">
           <ProtectedRoute><AdminInquiries /></ProtectedRoute>
+        </Route>
+        <Route path="/admin/team">
+          <ProtectedRoute><AdminTeamPage /></ProtectedRoute>
         </Route>
         <Route path="/admin">
           <ProtectedRoute><AdminDashboard /></ProtectedRoute>
